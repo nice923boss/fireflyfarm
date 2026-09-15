@@ -118,24 +118,12 @@
       ],
       "gallery": [
         {
-          "src": "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80",
-          "caption": "三合院古樸中庭"
-        },
-        {
           "src": "images/1789447099100-photo.jpg",
           "caption": "小客廳休息區"
         },
         {
           "src": "images/1789447110583-photo.jpg",
           "caption": "寢室溫馨床位"
-        },
-        {
-          "src": "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80",
-          "caption": "乾淨獨立衛浴"
-        },
-        {
-          "src": "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80",
-          "caption": "三合院走廊憩腳區"
         }
       ]
     },
@@ -186,16 +174,16 @@
           "caption": "貓頭鷹的家(樓中樓六人套房)"
         },
         {
+          "src": "images/1789447326783-chatgpt-image-2026-7-21-08-20-38.jpg",
+          "caption": "松鼠果果窩(四人套房)"
+        },
+        {
           "src": "images/1789447951416-d0c0a4bc-5c73-4b8d-b8df-acec5c68229c.jpg",
           "caption": "雙人房套房"
         },
         {
           "src": "images/1789447796693-195979.jpg",
           "caption": "戶外烤肉區(示意)"
-        },
-        {
-          "src": "images/1789447326783-chatgpt-image-2026-7-21-08-20-38.jpg",
-          "caption": "松鼠果果窩(四人套房)"
         }
       ]
     },
@@ -247,12 +235,8 @@
           "caption": "閣樓溫馨床位"
         },
         {
-          "src": "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80",
+          "src": "images/1789448856181-175102-0.jpg",
           "caption": "獨立衛浴設施"
-        },
-        {
-          "src": "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80",
-          "caption": "木屋門前獨立休閒陽台"
         }
       ]
     }
