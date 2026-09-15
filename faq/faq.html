@@ -1,0 +1,1444 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>飛螢農莊｜住進山林，把生活過得慢一點</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cream: {
+                            DEFAULT: '#F5F0E8',
+                            50: '#FAF7F2',
+                            100: '#F5F0E8',
+                            200: '#ECE3D5',
+                        },
+                        wood: {
+                            light: '#E5D6C3',
+                            DEFAULT: '#C7A982',
+                            dark: '#A88A63',
+                        },
+                        forest: {
+                            50: '#F2F5F3',
+                            100: '#E4EBE6',
+                            200: '#C2D2C5',
+                            600: '#48614D',
+                            700: '#344838',
+                            800: '#27382B',
+                            900: '#1C291E',
+                        },
+                        coffee: {
+                            DEFAULT: '#332A22',
+                            light: '#4D4137',
+                        },
+                        caramel: {
+                            DEFAULT: '#8A6948',
+                            hover: '#6E5238',
+                            light: '#A58462',
+                        },
+                        earth: {
+                            50: '#F5F0E8',
+                            100: '#ECE3D5',
+                            200: '#C7A982',
+                            700: '#8A6948',
+                            800: '#332A22',
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['"Noto Serif TC"', 'serif'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-cream text-coffee font-sans antialiased selection:bg-forest-700 selection:text-white">
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState } = React;
+
+        function App() {
+            const [activeCategory, setActiveCategory] = useState(0);
+            const [openFaqIndex, setOpenFaqIndex] = useState({});
+            const [roomModal, setRoomModal] = useState(null);
+            const [seasonModal, setSeasonModal] = useState(null);
+            const [edmModal, setEdmModal] = useState(null);
+
+            const [uploadedImages, setUploadedImages] = useState({});
+
+            const lineUrl = "https://page.line.me/xat.0000109878.m4f?oat_content=url&openQrModal=true";
+
+            const resolveImage = (keys, primaryFilename, fallbackUrl) => {
+                if (Array.isArray(keys)) {
+                    for (let k of keys) {
+                        if (uploadedImages[k]) return uploadedImages[k];
+                    }
+                } else if (uploadedImages[keys]) {
+                    return uploadedImages[keys];
+                }
+                return primaryFilename;
+            };
+
+            const handleImgError = (e, keys, fallbackUrl) => {
+                const currentSrc = e.target.src;
+                
+                if (currentSrc.includes('wp.com1UtC8KT_nbFMcRuiSUPvkDNmECF3yH3nU')) {
+                    e.target.src = 'https://wp.com/1UtC8KT_nbFMcRuiSUPvkDNmECF3yH3nU';
+                    return;
+                }
+                if (currentSrc.includes('wp.com/1UtC8KT_nbFMcRuiSUPvkDNmECF3yH3nU')) {
+                    e.target.src = 'https://lh3.googleusercontent.com/d/1UtC8KT_nbFMcRuiSUPvkDNmECF3yH3nU';
+                    return;
+                }
+
+                const baseName = Array.isArray(keys) ? keys[0] : keys;
+                
+                if (currentSrc.includes(`${baseName}.jpg`)) {
+                    e.target.src = `${baseName}.png`;
+                } else if (currentSrc.includes(`${baseName}.png`)) {
+                    e.target.src = `${baseName}.jpeg`;
+                } else {
+                    e.target.src = fallbackUrl;
+                }
+            };
+
+            const rooms = [
+                {
+                    id: 'whole',
+                    category: '包棟專區',
+                    name: '飛螢農莊 (包棟)',
+                    desc: '共五間套房（4人套房4間、6人閣樓套房1間），包含星閣、和光、粉霧、森白、藍汐五大特色主題房，適合家庭與親友團體一同入住。',
+                    priceNote: '一般假日 $22000 / 連假及螢火蟲季 $27000 / 平日 $17500',
+                    imgFile: '包棟民宿外觀.jpg',
+                    keys: ['包棟民宿外觀', '包棟民宿', '包棟外觀'],
+                    fallbackImg: 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=800&q=80',
+                    equipment: [
+                        '獨立衛浴(淋浴式)', '冷氣機、電視（數位頻道）', '免費 WiFi', '露台/走廊休憩空間',
+                        '禁菸房', '快煮壺', '吹風機', '洗髮精、沐浴乳', '茶包、杯子', '室內拖鞋',
+                        '免費停車場', '公共交誼空間', '公用冰箱', '戶外戲水池(夏季限定)',
+                        '免費出借麻將桌(數量有限，訂房時請先預約)', '代訂烤肉組服務',
+                        '嬰兒澡盆(免費提供)', '公共區域奶瓶蒸氣消毒鍋'
+                    ],
+                    gallery: [
+                        { name: '包棟民宿外觀全景', keys: ['包棟民宿外觀'], file: '包棟民宿外觀.jpg', fallback: 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=800&q=80' },
+                        { name: '星閣 (六人閣樓套房)', keys: ['星閣', '頂樓'], file: '星閣.jpg', fallback: 'https://images.unsplash.com/photo-1540518614846-7ede433c4550?auto=format&fit=crop&w=800&q=80' },
+                        { name: '和光 (四人套房)', keys: ['和光', '日式和風', '和風'], file: '和光.jpg', fallback: 'https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=800&q=80' },
+                        { name: '粉霧 (四人套房)', keys: ['粉霧', '粉紅kitty', 'kitty'], file: '粉霧.jpg', fallback: 'https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=800&q=80' },
+                        { name: '森白 (四人套房)', keys: ['森白', '中國風'], file: '森白.jpg', fallback: 'https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?auto=format&fit=crop&w=800&q=80' },
+                        { name: '藍汐 (四人套房)', keys: ['藍汐', '藍色地中海', '地中海'], file: '藍汐.jpg', fallback: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80' },
+                        { name: '公共交誼客廳', keys: ['交誼廳'], file: '交誼廳.jpg', fallback: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80' }
+                    ]
+                },
+                {
+                    id: 'courtyard',
+                    category: '傳統特色',
+                    name: '三合院區',
+                    desc: '熟悉的三合院落，住進山林裡。提供8人套房，適合大家庭與好友共度美好時光。',
+                    priceNote: '一般假日 $6000 / 連假及螢火蟲季 $8000 / 平日 $5200',
+                    imgFile: '八人套房.jpg',
+                    keys: ['八人套房', '三合院'],
+                    fallbackImg: 'https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=800&q=80',
+                    equipment: [
+                        '附小客廳', '冷氣機、電視（數位頻道）', '小冰箱', '免費 WiFi', '獨立衛浴(淋浴式)',
+                        '禁菸房', '快煮壺', '吹風機', '洗髮精、沐浴乳', '茶包、杯子', '室內拖鞋',
+                        '免費停車場', '戶外戲水池(夏季限定)', '免費出借麻將桌(訂房時請先預約)', '代訂烤肉組服務',
+                        '嬰兒澡盆(免費提供)', '公共區域奶瓶蒸氣消毒鍋'
+                    ],
+                    gallery: [
+                        { name: '八人套房空間全景', keys: ['八人套房', '三合院'], file: '八人套房.jpg', fallback: 'https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=800&q=80' },
+                        { name: '三合院古樸中庭', keys: ['三合院庭院'], file: '三合院庭院.jpg', fallback: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80' },
+                        { name: '小客廳休息區', keys: ['三合院客廳'], file: '三合院客廳.jpg', fallback: 'https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?auto=format&fit=crop&w=800&q=80' },
+                        { name: '寢室溫馨床位', keys: ['三合院臥室'], file: '三合院臥室.jpg', fallback: 'https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=800&q=80' },
+                        { name: '乾淨獨立衛浴', keys: ['三合院衛浴'], file: '三合院衛浴.jpg', fallback: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80' },
+                        { name: '三合院走廊憩腳區', keys: ['三合院走廊'], file: '三合院走廊.jpg', fallback: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80' }
+                    ]
+                },
+                {
+                    id: 'longstay',
+                    category: '慢活住宿區',
+                    name: '山上住久',
+                    desc: '不趕行程，才有時間生活。包含2人、4人與6人樓中樓房型，附設小客廳與簡易廚房。',
+                    priceNote: '一般假日包棟 $18900 / 連假及螢火蟲季包棟 $23000 / 平日包棟 $15000',
+                    imgFile: '山上住久外觀.jpg',
+                    keys: ['山上住久外觀', '山上住久'],
+                    fallbackImg: 'https://images.unsplash.com/photo-1507089947368-19c1da9775ae?auto=format&fit=crop&w=800&q=80',
+                    equipment: [
+                        '附小客廳及簡易廚房', '獨立冷暖氣機、電視（數位頻道）', '免費 WiFi', '獨立衛浴(淋浴式)',
+                        '禁菸房', '快煮壺', '吹風機', '洗髮精、沐浴乳', '茶包、杯子', '室內拖鞋',
+                        '免費停車場', '公用冰箱', '戶外戲水池(夏季限定)', '免費出借麻將桌(訂房時請先預約)', '代訂烤肉組服務',
+                        '嬰兒澡盆(免費提供)', '公共區域奶瓶蒸氣消毒鍋'
+                    ],
+                    gallery: [
+                        { name: '山上住久獨立山居建築', keys: ['山上住久外觀', '山上住久'], file: '山上住久外觀.jpg', fallback: 'https://images.unsplash.com/photo-1507089947368-19c1da9775ae?auto=format&fit=crop&w=800&q=80' },
+                        { name: '溫馨舒適小客廳', keys: ['山上住久客廳'], file: '山上住久客廳.jpg', fallback: 'https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?auto=format&fit=crop&w=800&q=80' },
+                        { name: '簡易廚房料理台', keys: ['山上住久廚房'], file: '山上住久廚房.jpg', fallback: 'https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=800&q=80' },
+                        { name: '樓中樓溫馨臥房', keys: ['山上住久閣樓'], file: '山上住久閣樓.jpg', fallback: 'https://images.unsplash.com/photo-1540518614846-7ede433c4550?auto=format&fit=crop&w=800&q=80' },
+                        { name: '採光雙人房套房', keys: ['山上住久雙人房'], file: '山上住久雙人房.jpg', fallback: 'https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=800&q=80' },
+                        { name: '戶外露台綠意景觀', keys: ['山上住久露台'], file: '山上住久露台.jpg', fallback: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80' }
+                    ]
+                },
+                {
+                    id: 'cabin',
+                    category: '獨立木屋群',
+                    name: '山上住久・小木屋',
+                    desc: '四棟獨立小木屋，樓中樓四人套房，房間裡設有遊戲區，享受專屬於山裡的慢生活節奏。',
+                    priceNote: '一般假日 $5690/棟 / 連假及螢火蟲季 $6300/棟 / 平日 $4500/棟',
+                    imgFile: 'https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=800&q=80',
+                    keys: ['小木屋群外觀', '小木屋群', '小木屋'],
+                    fallbackImg: 'https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=800&q=80',
+                    equipment: [
+                        '樓中樓四人套房，房間內設遊戲區', '獨立冷暖氣機、電視（數位頻道）', '免費 WiFi', '獨立衛浴(淋浴式)',
+                        '走廊休憩空間', '禁菸房', '快煮壺', '吹風機', '洗髮精、沐浴乳', '茶包、杯子',
+                        '室內拖鞋', '免費停車場', '公用冰箱', '戶外戲水池(夏季限定)', '免費出借麻將桌(訂房時請先預約)', '代訂烤肉組服務',
+                        '嬰兒澡盆(免費提供)', '公共區域奶瓶蒸氣消毒鍋'
+                    ],
+                    gallery: [
+                        { name: '小木屋群戶外庭園與烤肉區', keys: ['小木屋群外觀', '小木屋群'], file: '小木屋群外觀.jpg', fallback: 'https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=800&q=80' },
+                        { name: '原木風格樓中樓內部', keys: ['小木屋內部'], file: '小木屋內部.jpg', fallback: 'https://images.unsplash.com/photo-1540518614846-7ede433c4550?auto=format&fit=crop&w=800&q=80' },
+                        { name: '房內兒童小遊戲區', keys: ['小木屋遊戲區'], file: '小木屋遊戲區.jpg', fallback: 'https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=800&q=80' },
+                        { name: '閣樓溫馨雙床位', keys: ['小木屋閣樓'], file: '小木屋閣樓.jpg', fallback: 'https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=800&q=80' },
+                        { name: '獨立衛浴設施', keys: ['小木屋衛浴'], file: '小木屋衛浴.jpg', fallback: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80' },
+                        { name: '木屋門前獨立休閒陽台', keys: ['小木屋陽台'], file: '小木屋陽台.jpg', fallback: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80' }
+                    ]
+                }
+            ];
+
+            const seasonsData = [
+                {
+                    id: 'spring',
+                    title: '桐花螢光・走進森林',
+                    period: '4月 ～ 5月',
+                    desc: '白天漫步山林，欣賞五月雪般的桐花，探索植物與昆蟲；入夜後，跟著點點螢光走進森林，體驗一場屬於山林的夜間生態探索。',
+                    icon: '🌸',
+                    img: 'https://images.unsplash.com/photo-1511497584788-8767611925b4?auto=format&fit=crop&w=800&q=80',
+                    gallery: [
+                        'https://images.unsplash.com/photo-1511497584788-8767611925b4?auto=format&fit=crop&w=800&q=80',
+                        'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=800&q=80',
+                        'https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=800&q=80',
+                        'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80'
+                    ]
+                },
+                {
+                    id: 'summer',
+                    title: '山泉嬉水・清涼一夏',
+                    period: '6月 ～ 9月',
+                    desc: '走進山裡享受天然泉水戲水池，搭配竹筒飯DIY與各式手作體驗，在清涼山風與自然環境中，留下充滿歡笑的夏日回憶。',
+                    icon: '☀️',
+                    img: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80',
+                    gallery: [
+                        'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80',
+                        'https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=800&q=80',
+                        'https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=800&q=80',
+                        'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=800&q=80'
+                    ]
+                },
+                {
+                    id: 'autumn',
+                    title: '森林尋蹤・遇見山林',
+                    period: '10月 ～ 11月',
+                    desc: '走進秋日森林，觀察植物、昆蟲與山林生命，透過森林探索、生態觀察與戶外教學，發現藏在自然裡的小小驚喜。',
+                    icon: '🍂',
+                    img: 'https://images.unsplash.com/photo-1507371341079-28c8d8b9d073?auto=format&fit=crop&w=800&q=80',
+                    gallery: [
+                        'https://images.unsplash.com/photo-1507371341079-28c8d8b9d073?auto=format&fit=crop&w=800&q=80',
+                        'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=800&q=80',
+                        'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=800&q=80',
+                        'https://images.unsplash.com/photo-1511497584788-8767611925b4?auto=format&fit=crop&w=800&q=80'
+                    ]
+                },
+                {
+                    id: 'winter',
+                    title: '森林療癒・慢下來生活',
+                    period: '12月 ～ 隔年2月',
+                    desc: '沒有趕不完的行程，也沒有一定要完成的清單。睡到自然醒、漫步森林、聽風吹過樹梢，透過五感感受山林，在安靜的冬日裡，讓身心慢慢沉澱，找回生活原本的節奏。',
+                    icon: '🌿',
+                    img: 'https://images.unsplash.com/photo-1517824806704-9040b037703b?auto=format&fit=crop&w=800&q=80',
+                    gallery: [
+                        'https://images.unsplash.com/photo-1517824806704-9040b037703b?auto=format&fit=crop&w=800&q=80',
+                        'https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=800&q=80',
+                        'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=800&q=80',
+                        'https://images.unsplash.com/photo-1507371341079-28c8d8b9d073?auto=format&fit=crop&w=800&q=80'
+                    ]
+                }
+            ];
+
+            // 依照附件 Word《常見問題 FAQ》更新的 FAQ 分類與問答內容
+            const faqCategories = [
+                {
+                    id: '01',
+                    title: '親子住宿',
+                    subtitle: '帶著孩子來山上，這些事爸媽最關心',
+                    icon: '👶',
+                    faqs: [
+                        {
+                            q: 'Q1. 推薦哪些適合帶寶寶住的房型？',
+                            a: (
+                                <div className="space-y-3">
+                                    <p>如果是帶寶寶或幼兒入住，我們最推薦以下三款房型，讓家長入住時更安心，空間也更舒適：</p>
+                                    <div className="space-y-2 bg-cream-50 p-4 rounded-xl border border-wood/40">
+                                        <p className="font-semibold text-forest-700">🎑 日式四人房</p>
+                                        <p className="text-xs text-coffee/90 pl-4 border-l-2 border-caramel">和室通鋪設計，床面高度較低，適合有幼兒的家庭。</p>
+                                    </div>
+                                    <div className="space-y-2 bg-cream-50 p-4 rounded-xl border border-wood/40">
+                                        <p className="font-semibold text-forest-700">🏡 家庭套房</p>
+                                        <p className="text-xs text-coffee/90 pl-4 border-l-2 border-caramel">約15坪寬敞空間，並設有獨立冰箱，對於需要冷藏母乳、奶類或存放嬰幼兒副食品的家庭較為方便。</p>
+                                    </div>
+                                    <div className="space-y-2 bg-cream-50 p-4 rounded-xl border border-wood/40">
+                                        <p className="font-semibold text-forest-700">🏠 獨棟小木屋</p>
+                                        <p className="text-xs text-coffee/90 pl-4 border-l-2 border-caramel">溫馨的樓中樓四人套房，房內設有專屬遊戲區，讓孩子在房內也能有自己的遊戲空間。</p>
+                                    </div>
+                                    <p className="text-xs text-caramel italic">※ 如果有寶寶同行，也可以在訂房時告知孩子年齡及住宿需求，我們可以協助提供房型建議。</p>
+                                </div>
+                            )
+                        },
+                        {
+                            q: 'Q2. 農莊提供哪些免費的嬰幼兒備品？',
+                            a: (
+                                <div className="space-y-3">
+                                    <p>為了減輕爸媽帶孩子出門的行李負擔，農莊提供部分嬰幼兒用品：</p>
+                                    <div className="bg-cream-50 p-4 rounded-xl border border-wood/40 space-y-2">
+                                        <p className="font-semibold text-forest-700 flex items-center">
+                                            <span className="bg-caramel text-white text-[10px] px-2 py-0.5 rounded mr-2">客房借用</span>
+                                            請於訂房時提前預約
+                                        </p>
+                                        <ul className="list-disc list-inside text-xs space-y-1 text-coffee/90 pl-2">
+                                            <li>嬰兒澡盆</li>
+                                            <li>小板凳</li>
+                                            <li>水瓢</li>
+                                        </ul>
+                                        <p className="text-xs text-amber-800 font-medium pt-1">※ 目前無提供床邊防撞護欄。</p>
+                                    </div>
+                                    <div className="bg-cream-50 p-4 rounded-xl border border-wood/40 space-y-1">
+                                        <p className="font-semibold text-forest-700 flex items-center">
+                                            <span className="bg-forest-700 text-white text-[10px] px-2 py-0.5 rounded mr-2">公共區域</span>
+                                            免預約
+                                        </p>
+                                        <p className="text-xs text-coffee/90 pl-2">餐廳及公共空間備有奶瓶蒸氣消毒鍋，方便家長消毒奶瓶及嬰幼兒餐具。</p>
+                                    </div>
+                                    <p className="text-xs text-coffee/80">若有特殊需求，建議訂房時先告知，我們可以協助確認。</p>
+                                </div>
+                            )
+                        },
+                        {
+                            q: 'Q3. 寵物可以入住嗎？',
+                            a: (
+                                <div className="space-y-2">
+                                    <p>部分指定房型可攜帶寵物入住。</p>
+                                    <p>目前以每房 <strong className="text-forest-700">1 隻寵物</strong>為原則，並需另外酌收寵物過夜費及押金。</p>
+                                    <p className="text-xs text-caramel">由於並非所有房型都開放寵物入住，請務必於訂房前先確認可入住的房型及相關規定。</p>
+                                </div>
+                            )
+                        },
+                        {
+                            q: 'Q4. 房間都有獨立衛浴嗎？',
+                            a: (
+                                <div className="space-y-2">
+                                    <p>飛螢農莊的住宿房型以房內獨立衛浴為主，讓旅人在山林裡住宿，也能保有基本的便利與舒適。</p>
+                                </div>
+                            )
+                        }
+                    ]
+                },
+                {
+                    id: '02',
+                    title: '入住須知',
+                    subtitle: '入住前先知道，住起來更安心',
+                    icon: '🔑',
+                    faqs: [
+                        {
+                            q: 'Q1. 幾點可以入住與退房？',
+                            a: (
+                                <div className="space-y-3">
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                        <div className="bg-cream-50 p-3 rounded-xl border border-wood/40">
+                                            <span className="text-xs text-caramel font-semibold block">入住時間</span>
+                                            <span className="text-base font-bold text-forest-700">15:00 － 23:00</span>
+                                        </div>
+                                        <div className="bg-cream-50 p-3 rounded-xl border border-wood/40">
+                                            <span className="text-xs text-caramel font-semibold block">退房時間</span>
+                                            <span className="text-base font-bold text-forest-700">翌日 11:00 前</span>
+                                        </div>
+                                    </div>
+                                    <p className="text-xs text-coffee/80">如需延後退房，請事先詢問現場安排。</p>
+                                    <div className="text-xs space-y-1 bg-amber-50/70 p-3 rounded-xl border border-amber-200 text-amber-900">
+                                        <p className="font-semibold">逾時退房將酌收相關費用：</p>
+                                        <p>• 平日及一般假日：400元／小時</p>
+                                        <p>• 連續假期：1,000元／小時</p>
+                                        <p className="text-[11px] text-amber-800">※ 未滿1小時以1小時計算</p>
+                                    </div>
+                                    <p className="text-xs text-coffee/80">退房時，請將鑰匙留於房內或插於門把，並確認關閉冷氣、電燈及電器設備。</p>
+                                </div>
+                            )
+                        },
+                        {
+                            q: 'Q2. 需要自己帶牙刷、牙膏嗎？',
+                            a: (
+                                <div className="space-y-3">
+                                    <p className="text-forest-700 font-medium">為響應環保減塑政策，農莊不主動提供一次性盥洗備品。</p>
+                                    <div className="bg-red-50/60 p-3 rounded-xl border border-red-200 text-xs">
+                                        <p className="font-semibold text-red-800 mb-1">❌ 不提供項目包含：</p>
+                                        <p className="text-red-900/80">• 牙刷 • 牙膏 • 刮鬍刀 • 浴帽等一次性用品</p>
+                                        <p className="mt-2 text-coffee font-medium">建議旅客自行準備個人盥洗用品，包含毛巾及浴巾。</p>
+                                    </div>
+                                    <div className="bg-emerald-50/60 p-3 rounded-xl border border-emerald-200 text-xs">
+                                        <p className="font-semibold text-emerald-800 mb-1">🌿 房內仍提供：</p>
+                                        <p className="text-emerald-900/80">• 洗髮乳 • 沐浴乳 • 吹風機</p>
+                                    </div>
+                                    <p className="text-xs text-caramel italic">※ 如果是帶寶寶入住，也建議依孩子平時使用習慣，自行準備嬰幼兒專用盥洗用品。</p>
+                                </div>
+                            )
+                        },
+                        {
+                            q: 'Q3. 衛浴與熱水使用有哪些注意事項？',
+                            a: (
+                                <div className="space-y-3">
+                                    <p>部分四人房使用瓦斯熱水器，沐浴前請先測試水溫。</p>
+                                    <div className="bg-cream-50 p-3.5 rounded-xl border border-wood/40 text-xs">
+                                        <p className="font-semibold text-forest-700 mb-1">🚨 若發現熱水異常：</p>
+                                        <p className="mb-1">可能是熱水器電池沒電，請立即聯絡專線：</p>
+                                        <a href="tel:0975783371" className="inline-block bg-forest-700 text-white font-mono px-3 py-1 rounded-lg font-bold hover:bg-forest-800 transition-colors">
+                                            📞 0975-783371
+                                        </a>
+                                    </div>
+                                    <p className="text-xs text-amber-800 bg-amber-50 p-3 rounded-xl border border-amber-200">
+                                        另外，由於園區管線較長，為避免造成管線堵塞，衛生用品請勿投入馬桶。
+                                    </p>
+                                </div>
+                            )
+                        },
+                        {
+                            q: 'Q4. 山區住宿需要特別注意什麼？',
+                            a: (
+                                <div className="space-y-3">
+                                    <p>飛螢農莊位於山林環境，與市區住宿有些不同。建議入住時：</p>
+                                    <ul className="list-disc list-inside text-xs space-y-1.5 text-coffee/90 bg-cream-50 p-3.5 rounded-xl border border-wood/40">
+                                        <li>穿著舒適、防滑的鞋子</li>
+                                        <li>夜間外出可準備手電筒</li>
+                                        <li>夏季準備防蚊用品</li>
+                                        <li>山區天氣變化較快，可準備薄外套及雨具</li>
+                                        <li>戶外活動時請依現場指示行動</li>
+                                    </ul>
+                                    <p className="text-xs text-coffee/80">山林裡偶爾會遇見昆蟲或其他自然生物，這也是住進山裡的一部分。</p>
+                                </div>
+                            )
+                        },
+                        {
+                            q: 'Q5. 房間有冷氣、電視和冰箱嗎？',
+                            a: (
+                                <div className="space-y-2">
+                                    <p>每間房間皆有<strong className="text-forest-700">冷氣</strong>和<strong className="text-forest-700">電視（數位頻道）</strong>。</p>
+                                    <p className="text-xs text-coffee/90">冰箱只有部分房型有，另外園區也備有<strong className="text-forest-700">公用冰箱</strong>可以借冰食材。</p>
+                                </div>
+                            )
+                        }
+                    ]
+                },
+                {
+                    id: '03',
+                    title: '餐飲服務',
+                    subtitle: '不用急著下山，留在山上慢慢吃',
+                    icon: '🍱',
+                    faqs: [
+                        {
+                            q: 'Q1. 早餐供應時間？',
+                            a: (
+                                <div className="space-y-2">
+                                    <div className="bg-cream-50 p-4 rounded-xl border border-wood/40 inline-block">
+                                        <span className="text-xs text-caramel font-semibold block mb-1">早餐供應時間</span>
+                                        <span className="text-xl font-bold text-forest-700">08:00 － 09:00</span>
+                                    </div>
+                                    <p className="text-xs text-coffee/80">請於供應時間內享用，逾時恕不補供。實際早餐內容依當日供應為準。</p>
+                                </div>
+                            )
+                        },
+                        {
+                            q: 'Q2. 晚餐要怎麼預約？',
+                            a: (
+                                <div className="space-y-3">
+                                    <div className="bg-amber-50 p-3 rounded-xl border border-amber-200 text-xs text-amber-900 font-semibold">
+                                        ⚠️ 晚餐及部分餐飲體驗需事先準備食材，建議於入住前 3～5 天預約。
+                                    </div>
+                                    <p>目前提供以下餐飲服務：</p>
+                                    <ul className="space-y-2 text-xs font-medium text-coffee">
+                                        <li className="flex items-center p-2 rounded-lg bg-cream-50 border border-wood/30">
+                                            <span className="text-lg mr-2.5">🎋</span> 竹筒飯 DIY
+                                        </li>
+                                        <li className="flex items-center p-2 rounded-lg bg-cream-50 border border-wood/30">
+                                            <span className="text-lg mr-2.5">🍗</span> 桶仔雞料理
+                                        </li>
+                                        <li className="flex items-center p-2 rounded-lg bg-cream-50 border border-wood/30">
+                                            <span className="text-lg mr-2.5">🍚</span> 合菜
+                                        </li>
+                                        <li className="flex items-center p-2 rounded-lg bg-cream-50 border border-wood/30">
+                                            <span className="text-lg mr-2.5">🌾</span> 割稻仔飯（僅限團體預約）
+                                        </li>
+                                        <li className="flex items-center p-2 rounded-lg bg-cream-50 border border-wood/30">
+                                            <span className="text-lg mr-2.5">🔥</span> 代訂烤肉組
+                                        </li>
+                                    </ul>
+                                    <p className="text-xs text-coffee/80">若有餐飲需求，建議訂房後提前與我們確認。</p>
+                                </div>
+                            )
+                        },
+                        {
+                            q: 'Q3. 可以自己煮東西嗎？',
+                            a: (
+                                <div className="space-y-2">
+                                    <p>部分住宿空間設有簡易廚房，但各房型設備不同，並非所有房型都適合自行炊煮。</p>
+                                    <p className="text-xs text-caramel">若有自行料理的需求，請於訂房前確認房型設備及使用規範。</p>
+                                </div>
+                            )
+                        },
+                        {
+                            q: 'Q4. 可以烤肉嗎？',
+                            a: (
+                                <div className="space-y-2">
+                                    <p>可以。飛螢農莊提供適合家庭及親友聚會的戶外活動空間，也有烤肉相關安排。</p>
+                                    <p className="text-xs text-coffee/80">若需要烤肉場地、食材或相關服務，建議於訂房時一併詢問。</p>
+                                </div>
+                            )
+                        }
+                    ]
+                },
+                {
+                    id: '04',
+                    title: '交通與周邊',
+                    subtitle: '山上比較安靜，也需要多準備一點',
+                    icon: '🚗',
+                    faqs: [
+                        {
+                            q: 'Q1. 農莊的路會不會很難開？孩子會暈車嗎？',
+                            a: (
+                                <div className="space-y-3">
+                                    <p>從 <strong className="text-forest-700">國道一號・三義交流道</strong> 或 <strong className="text-forest-700">國道三號・通霄交流道</strong> 下交流道後，接苗48線前往農莊。</p>
+                                    <p className="text-xs bg-cream-50 p-3 rounded-xl border border-wood/40">
+                                        沿途主要為雙線道路，沒有需要特別考驗駕駛技術的陡坡或急彎，車程約 <strong>15～20 分鐘</strong> 即可抵達。
+                                    </p>
+                                    <p className="text-xs text-coffee/80">如果孩子本身容易暈車，仍建議依平時習慣提前做好防暈車準備。</p>
+                                </div>
+                            )
+                        },
+                        {
+                            q: 'Q2. 附近有便利商店或藥局嗎？萬一要買尿布或常用藥怎麼辦？',
+                            a: (
+                                <div className="space-y-3">
+                                    <p>農莊位於較為安靜的山區，周邊不像市區一樣隨時都有商店。</p>
+                                    <div className="space-y-2 bg-cream-50 p-3.5 rounded-xl border border-wood/40">
+                                        <p className="font-semibold text-forest-700 flex items-center text-sm">🏪 便利商店</p>
+                                        <p className="text-xs text-coffee/90">沿苗48線前往通霄市區，約 10～15 分鐘可抵達便利商店。</p>
+                                    </div>
+                                    <div className="space-y-2 bg-cream-50 p-3.5 rounded-xl border border-wood/40">
+                                        <p className="font-semibold text-forest-700 flex items-center text-sm">🏥 藥局與醫療</p>
+                                        <p className="text-xs text-coffee/90">通霄及三義市區皆有診所與藥局，可採購奶粉、尿布及日常用品。</p>
+                                    </div>
+                                    <div className="bg-amber-50 p-3.5 rounded-xl border border-amber-200 text-xs space-y-1.5 text-amber-900">
+                                        <p className="font-bold flex items-center text-sm">💡 貼心提醒</p>
+                                        <p>如果是帶寶寶入住，建議進山前先在市區備妥：</p>
+                                        <p className="pl-2">• 孩子習慣的奶粉 • 尺寸合適的尿布 • 副食品 • 個人常用用品 • 防蚊用品 • 個人藥品</p>
+                                        <p className="pt-1 text-amber-800">山上環境較為安靜，也比較不方便臨時採買，先準備好會更加安心。</p>
+                                    </div>
+                                </div>
+                            )
+                        },
+                        {
+                            q: 'Q3. 農莊有停車場嗎？',
+                            a: (
+                                <div className="space-y-2">
+                                    <p>園區內停車位主要提供住宿旅客使用。</p>
+                                    <p className="text-xs text-coffee/90">未過夜訪客的車輛不開放停放於園區內，一般車輛請依現場指示停放於園區外指定位置。</p>
+                                    <p className="text-xs text-caramel">大型團體或遊覽車如有停車需求，建議事前與農莊確認。</p>
+                                </div>
+                            )
+                        }
+                    ]
+                },
+                {
+                    id: '05',
+                    title: '山林與親子安全',
+                    subtitle: '山林很美，也需要一起學習與自然相處',
+                    icon: '🌲',
+                    faqs: [
+                        {
+                            q: 'Q1. 山區會不會很多小黑蚊？要怎麼幫孩子防護？',
+                            a: (
+                                <div className="space-y-3">
+                                    <p>飛螢農莊位於自然山林環境，昆蟲及其他小生物本來就是這裡的一部分，因此戶外活動時可能遇到蚊蟲。</p>
+                                    <div className="bg-emerald-50/70 p-3.5 rounded-xl border border-emerald-200 text-xs space-y-1 text-emerald-900">
+                                        <p className="font-bold text-sm">🛡️ 農莊防護</p>
+                                        <p>• 房間設有紗窗</p>
+                                        <p>• 定期進行公共環境及房內的物理性防蚊措施</p>
+                                    </div>
+                                    <div className="bg-cream-50 p-3.5 rounded-xl border border-wood/40 text-xs space-y-1">
+                                        <p className="font-bold text-sm text-forest-700">🎒 家長可以準備</p>
+                                        <p>• 薄長袖、長褲及包鞋</p>
+                                        <p>• 適合孩子年齡使用的防蚊用品</p>
+                                        <p>• 個人習慣使用的止癢用品</p>
+                                    </div>
+                                    <p className="text-xs text-coffee/80">戶外活動時，建議做好皮膚遮蔽，尤其是孩子。</p>
+                                </div>
+                            )
+                        },
+                        {
+                            q: 'Q2. 山泉水戲水池和野溪安全嗎？有什麼規定？',
+                            a: (
+                                <div className="space-y-3">
+                                    <div className="bg-sky-50/70 p-3.5 rounded-xl border border-sky-200 text-xs space-y-1">
+                                        <p className="font-bold text-sm text-sky-900">⛲ 山泉水戲水池</p>
+                                        <p className="text-sky-950">戲水池使用天然山泉水，水深約 50～60 公分。農莊會定期進行清潔維護及更換溪水。</p>
+                                        <p className="text-xs text-sky-800 pt-1">開放時間：約為6月下旬至11月上旬，每週六 13:00－18:00（實際開放狀況仍依季節及天候為準）。</p>
+                                    </div>
+                                    <div className="bg-cream-50 p-3.5 rounded-xl border border-wood/40 text-xs space-y-1">
+                                        <p className="font-bold text-sm text-forest-700">🏞️ 天然野溪</p>
+                                        <p>天然溪水清澈，可以觀察小魚蝦。由於溪底有鵝卵石，建議孩子穿著：</p>
+                                        <p className="font-semibold text-caramel pl-2">防滑涉水鞋或適合戲水的涼鞋</p>
+                                        <p className="text-coffee/80 pl-2">以降低滑倒或腳部擦傷的風險。</p>
+                                    </div>
+                                    <div className="bg-red-50 p-3.5 rounded-xl border border-red-200 text-xs text-red-900 space-y-1">
+                                        <p className="font-bold text-sm flex items-center">⚠️ 重要安全提醒</p>
+                                        <p>農莊的野溪及戲水池均不設救生員。</p>
+                                        <p className="font-semibold">孩子戲水時，請家長或同行成人全程陪同並在旁照顧，不可讓孩子單獨戲水。</p>
+                                    </div>
+                                </div>
+                            )
+                        },
+                        {
+                            q: 'Q3. 夜間生態導覽適合多大的小孩？需要準備什麼？',
+                            a: (
+                                <div className="space-y-3">
+                                    <p className="font-medium text-forest-700">只要孩子能自行行走，或家長願意使用抱帶／背巾背負，都歡迎參加夜間生態導覽。</p>
+                                    <div className="bg-cream-50 p-4 rounded-xl border border-wood/40 space-y-2.5 text-xs">
+                                        <p className="font-bold text-sm text-forest-700">📋 行前準備</p>
+                                        <div>
+                                            <p className="font-semibold text-caramel">👟 鞋子</p>
+                                            <p className="text-coffee/90">請穿運動鞋或包鞋，不建議穿拖鞋或涼鞋。</p>
+                                        </div>
+                                        <div>
+                                            <p className="font-semibold text-caramel">🔦 手電筒</p>
+                                            <p className="text-coffee/90">可準備小型手電筒。4～5 月賞螢期間，可在手電筒外罩上紅色玻璃紙，降低強光對螢火蟲的干擾。</p>
+                                        </div>
+                                        <div>
+                                            <p className="font-semibold text-caramel">👀 自然觀察</p>
+                                            <p className="text-coffee/90">帶著孩子用雙眼觀察，不任意捕捉、觸碰或驚擾昆蟲。</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            )
+                        }
+                    ]
+                },
+                {
+                    id: '06',
+                    title: '園區規範',
+                    subtitle: '共同維護山林安靜與清潔的環境',
+                    icon: '📜',
+                    faqs: [
+                        {
+                            q: 'Q1. 停車與訪客有什麼規定？',
+                            a: (
+                                <div className="space-y-3 text-xs sm:text-sm">
+                                    <p>園區內停車位主要提供住宿旅客使用。</p>
+                                    <p className="bg-cream-50 p-3 rounded-xl border border-wood/40">
+                                        未過夜訪客車輛不開放停放於園區內，一般車輛請依現場指示停放於園區外指定位置。
+                                    </p>
+                                    <p className="bg-amber-50 p-3 rounded-xl border border-amber-200 text-amber-900 font-medium">
+                                        非住宿旅客進入園區，需酌收每人 <strong>100 元</strong> 環境清潔費。
+                                    </p>
+                                </div>
+                            )
+                        },
+                        {
+                            q: 'Q2. 園區內有安靜時間與全面禁菸規範嗎？',
+                            a: (
+                                <div className="space-y-3 text-xs sm:text-sm">
+                                    <div className="bg-cream-50 p-3.5 rounded-xl border border-wood/40">
+                                        <p className="font-semibold text-forest-700 mb-1">🌙 夜間安靜時間</p>
+                                        <p className="text-coffee/90">為維護山林寧靜及所有旅客的住宿品質，晚上 <strong>22:00 後</strong> 請降低音量，維護園區安寧。</p>
+                                    </div>
+                                    <div className="bg-cream-50 p-3.5 rounded-xl border border-wood/40">
+                                        <p className="font-semibold text-forest-700 mb-1">🚭 全面禁菸規定</p>
+                                        <p className="text-coffee/90">依煙害防制法規定，客房內及室內公共空間<strong>全面禁止吸菸</strong>（含電子菸）。如需吸菸請至指定戶外區域。</p>
+                                    </div>
+                                </div>
+                            )
+                        }
+                    ]
+                },
+                {
+                    id: '07',
+                    title: '山林保育',
+                    subtitle: '永續共生，留給下一代美麗的森林生態',
+                    icon: '🌿',
+                    faqs: [
+                        {
+                            q: 'Q1. 飛螢農莊在生態保育上有哪些理念與努力？',
+                            a: (
+                                <div className="space-y-3">
+                                    <p>飛螢農莊長期致力於苗栗山林的生態保育與螢火蟲復育。我們堅持不施用化學農藥與除草劑，保護園區內的天然水源與棲地。</p>
+                                    <p className="text-xs bg-emerald-50/70 p-3.5 rounded-xl border border-emerald-200 text-emerald-900">
+                                        期待來到這裡的每一位朋友與小朋友，都能透過五感親近自然、學習尊重生命，讓這片山林生生不息。
+                                    </p>
+                                </div>
+                            )
+                        },
+                        {
+                            q: 'Q2. 還有其他問題想詢問，該怎麼聯絡？',
+                            a: (
+                                <div className="space-y-4">
+                                    <p>如果 FAQ 中沒有找到你想知道的答案，歡迎直接聯繫飛螢農莊。</p>
+                                    <div className="bg-cream-50 p-4 rounded-xl border border-wood/40 space-y-2 text-xs sm:text-sm font-medium">
+                                        <p className="flex items-center">
+                                            <span className="w-16 text-caramel font-bold">電話｜</span>
+                                            <a href="tel:037783371" className="text-forest-700 hover:underline">037-783371</a>
+                                        </p>
+                                        <p className="flex items-center">
+                                            <span className="w-16 text-caramel font-bold">手機｜</span>
+                                            <a href="tel:0975783371" className="text-forest-700 hover:underline">0975-783371</a>
+                                        </p>
+                                        <p className="text-coffee/80 pt-1">也可以透過官方 LINE 與我們聯繫。</p>
+                                    </div>
+
+                                    {/* Action CTA Buttons */}
+                                    <div className="pt-2 flex flex-col sm:flex-row gap-3">
+                                        <a 
+                                            href="tel:037783371" 
+                                            className="flex-1 py-3 px-5 bg-forest-700 text-white text-center rounded-xl font-medium text-xs sm:text-sm hover:bg-forest-800 transition-all shadow-sm flex items-center justify-center space-x-2">
+                                            <span>📞 聯絡飛螢農莊</span>
+                                        </a>
+                                        <a 
+                                            href={lineUrl} 
+                                            target="_blank" 
+                                            rel="noopener noreferrer" 
+                                            className="flex-1 py-3 px-5 bg-emerald-600 text-white text-center rounded-xl font-medium text-xs sm:text-sm hover:bg-emerald-700 transition-all shadow-sm flex items-center justify-center space-x-2">
+                                            <span>💬 加入官方 LINE</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            )
+                        }
+                    ]
+                }
+            ];
+
+            const toggleFaq = (catIndex, faqIdx) => {
+                const key = `${catIndex}-${faqIdx}`;
+                setOpenFaqIndex(prev => ({
+                    ...prev,
+                    [key]: !prev[key]
+                }));
+            };
+
+            const scrollToSection = (id) => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.scrollIntoView({ behavior: 'smooth' });
+                }
+            };
+
+            return (
+                <div className="min-h-screen flex flex-col bg-cream text-coffee">
+                    {/* Navigation Header */}
+                    <header className="fixed top-0 left-0 right-0 z-50 bg-cream/90 backdrop-blur-md border-b border-wood/40 transition-all duration-300">
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+                            <a 
+                                href="#about" 
+                                onClick={(e) => { e.preventDefault(); scrollToSection('about'); }}
+                                className="flex items-center space-x-2 cursor-pointer">
+                                <span className="text-2xl font-serif font-bold text-forest-700 tracking-wider">飛螢農莊</span>
+                                <span className="text-xs uppercase tracking-widest text-caramel hidden sm:inline-block border-l border-wood/60 pl-2 font-medium">Eco Homestay</span>
+                            </a>
+                            <nav className="hidden lg:flex items-center space-x-5 text-sm font-medium text-coffee">
+                                <a 
+                                    href="#about" 
+                                    onClick={(e) => { e.preventDefault(); scrollToSection('about'); }}
+                                    className="hover:text-caramel transition-colors cursor-pointer">
+                                    關於飛螢
+                                </a>
+                                <a 
+                                    href="#accommodation" 
+                                    onClick={(e) => { e.preventDefault(); scrollToSection('accommodation'); }}
+                                    className="hover:text-caramel transition-colors cursor-pointer">
+                                    住宿空間
+                                </a>
+                                <a 
+                                    href="#seasons" 
+                                    onClick={(e) => { e.preventDefault(); scrollToSection('seasons'); }}
+                                    className="hover:text-caramel transition-colors cursor-pointer">
+                                    四季旅行
+                                </a>
+                                <a 
+                                    href="#audiences" 
+                                    onClick={(e) => { e.preventDefault(); scrollToSection('audiences'); }}
+                                    className="hover:text-caramel transition-colors cursor-pointer">
+                                    專屬體驗
+                                </a>
+                                <a 
+                                    href="#activities" 
+                                    onClick={(e) => { e.preventDefault(); scrollToSection('activities'); }}
+                                    className="hover:text-caramel transition-colors cursor-pointer">
+                                    活動與餐飲
+                                </a>
+                                <a 
+                                    href="#transport" 
+                                    onClick={(e) => { e.preventDefault(); scrollToSection('transport'); }}
+                                    className="hover:text-caramel transition-colors text-forest-700 font-bold cursor-pointer">
+                                    交通資訊
+                                </a>
+                                <a 
+                                    href="#faq" 
+                                    onClick={(e) => { e.preventDefault(); scrollToSection('faq'); }}
+                                    className="hover:text-caramel transition-colors cursor-pointer">
+                                    常見問題
+                                </a>
+                            </nav>
+
+                            <div className="flex items-center space-x-2 sm:space-x-3">
+                                <a href="https://www.facebook.com/share/19KH7dHAkk/" target="_blank" rel="noopener noreferrer" className="hidden sm:inline-flex items-center px-3 py-1.5 text-xs font-medium border border-blue-600 text-blue-700 rounded-full hover:bg-blue-600 hover:text-white transition-all">
+                                    臉書快訊
+                                </a>
+                                <a href={lineUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center px-3 py-1.5 text-xs font-medium border border-forest-700 text-forest-700 rounded-full hover:bg-forest-700 hover:text-white transition-all">
+                                    官方 LINE
+                                </a>
+                                <a 
+                                    href={lineUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="inline-flex items-center px-4 py-2 text-xs sm:text-sm font-medium bg-forest-700 text-white rounded-full shadow-md hover:bg-forest-800 transition-all cursor-pointer">
+                                    立即預約
+                                </a>
+                            </div>
+                        </div>
+                    </header>
+
+                    {/* Hero Banner Section */}
+                    <section id="about" className="relative pt-20 min-h-screen flex items-center justify-center bg-cream overflow-hidden">
+                        <div className="absolute inset-0 z-0">
+                            <img src="https://images.unsplash.com/photo-1511497584788-8767611925b4?auto=format&fit=crop&w=1920&q=80" alt="飛螢農莊山林景致" className="w-full h-full object-cover opacity-20" />
+                            <div className="absolute inset-0 bg-gradient-to-t from-cream via-transparent to-transparent"></div>
+                        </div>
+                        <div className="relative z-10 max-w-4xl mx-auto px-4 text-center py-20">
+                            <span className="inline-block py-1.5 px-4 mb-6 rounded-full bg-cream-200 text-caramel border border-wood text-xs sm:text-sm font-medium tracking-wide">
+                                🌿 苗栗通霄・親子生態民宿與包棟聚會首選
+                            </span>
+                            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-serif font-bold text-forest-700 tracking-tight leading-tight mb-6">
+                                住進山林，<br className="hidden sm:inline" />把生活過得慢一點。
+                            </h1>
+                            <p className="text-lg sm:text-xl text-coffee max-w-2xl mx-auto mb-10 leading-relaxed font-light">
+                                來到飛螢農莊，讓孩子在草地上奔跑、玩山泉水、認識昆蟲；讓大人暫時放下忙碌，好好吃一頓竹筒飯、看一片山、聽一晚蟲鳴。
+                            </p>
+                            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                                <a 
+                                    href="#accommodation" 
+                                    onClick={(e) => { e.preventDefault(); scrollToSection('accommodation'); }}
+                                    className="w-full sm:w-auto px-8 py-4 bg-forest-700 text-white rounded-full font-medium shadow-lg hover:bg-forest-800 transition-all transform hover:-translate-y-0.5 text-center">
+                                    探索房型與設備
+                                </a>
+                                <a 
+                                    href={lineUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="w-full sm:w-auto px-8 py-4 bg-white/90 backdrop-blur border border-wood text-coffee rounded-full font-medium hover:bg-white hover:text-caramel transition-all shadow-sm text-center">
+                                    LINE 官方帳號預約
+                                </a>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* Audiences Section */}
+                    <section id="audiences" className="py-20 bg-cream-200 border-y border-wood">
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                            <div className="text-center max-w-3xl mx-auto mb-16">
+                                <h2 className="text-xs uppercase tracking-widest text-caramel font-semibold mb-3">Tailored Experience</h2>
+                                <h3 className="text-3xl sm:text-4xl font-serif font-bold text-forest-700">專屬體驗</h3>
+                            </div>
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                                {/* 1. 親子與家庭 */}
+                                <div className="p-6 rounded-2xl bg-cream border border-wood hover:shadow-lg transition-all flex flex-col justify-between">
+                                    <div>
+                                        <div className="text-3xl mb-3 text-caramel">👨‍👩‍👧‍👦</div>
+                                        <h4 className="font-serif font-bold text-xl text-forest-700 mb-3">親子與家庭</h4>
+                                        <ul className="text-coffee text-xs leading-relaxed space-y-2 mb-6 border-t border-wood/30 pt-3">
+                                            <li className="flex items-center"><span className="text-caramel mr-1.5 font-bold">•</span> 親子家庭</li>
+                                            <li className="flex items-center"><span className="text-caramel mr-1.5 font-bold">•</span> 親友團體</li>
+                                            <li className="flex items-center"><span className="text-caramel mr-1.5 font-bold">•</span> 家庭聚會</li>
+                                            <li className="flex items-center"><span className="text-caramel mr-1.5 font-bold">•</span> 生日／紀念日</li>
+                                            <li className="flex items-center"><span className="text-caramel mr-1.5 font-bold">•</span> 親子生態旅行</li>
+                                        </ul>
+                                    </div>
+                                    <button 
+                                        onClick={() => scrollToSection('accommodation')}
+                                        className="w-full py-2.5 px-4 bg-forest-700 text-white rounded-xl text-xs font-semibold hover:bg-forest-800 transition-all shadow-sm text-center">
+                                        👉 探索親子體驗
+                                    </button>
+                                </div>
+
+                                {/* 2. 學校與戶外教學 */}
+                                <div className="p-6 rounded-2xl bg-cream border border-wood hover:shadow-lg transition-all flex flex-col justify-between">
+                                    <div>
+                                        <div className="text-3xl mb-3 text-caramel">🎒</div>
+                                        <h4 className="font-serif font-bold text-xl text-forest-700 mb-3">學校與戶外教學</h4>
+                                        <ul className="text-coffee text-xs leading-relaxed space-y-2 mb-6 border-t border-wood/30 pt-3">
+                                            <li className="flex items-center"><span className="text-caramel mr-1.5 font-bold">•</span> 幼兒園／國小／國中戶外教學</li>
+                                            <li className="flex items-center"><span className="text-caramel mr-1.5 font-bold">•</span> 食農教育</li>
+                                            <li className="flex items-center"><span className="text-caramel mr-1.5 font-bold">•</span> 環境教育</li>
+                                            <li className="flex items-center"><span className="text-caramel mr-1.5 font-bold">•</span> 生態探索</li>
+                                            <li className="flex items-center"><span className="text-caramel mr-1.5 font-bold">•</span> 校外教學</li>
+                                            <li className="flex items-center"><span className="text-caramel mr-1.5 font-bold">•</span> 主題式學習活動</li>
+                                        </ul>
+                                    </div>
+                                    <button 
+                                        onClick={() => setEdmModal({ title: '學校戶外教學與食農教育方案', type: 'school' })}
+                                        className="w-full py-2.5 px-4 bg-forest-700 text-white rounded-xl text-xs font-semibold hover:bg-forest-800 transition-all shadow-sm text-center">
+                                        👉 了解戶外教學方案
+                                    </button>
+                                </div>
+
+                                {/* 3. 企業與團隊 */}
+                                <div className="p-6 rounded-2xl bg-cream border border-wood hover:shadow-lg transition-all flex flex-col justify-between">
+                                    <div>
+                                        <div className="text-3xl mb-3 text-caramel">🏢</div>
+                                        <h4 className="font-serif font-bold text-xl text-forest-700 mb-3">企業與團隊</h4>
+                                        <ul className="text-coffee text-xs leading-relaxed space-y-2 mb-6 border-t border-wood/30 pt-3">
+                                            <li className="flex items-center"><span className="text-caramel mr-1.5 font-bold">•</span> 企業員工旅遊</li>
+                                            <li className="flex items-center"><span className="text-caramel mr-1.5 font-bold">•</span> 團隊共識營</li>
+                                            <li className="flex items-center"><span className="text-caramel mr-1.5 font-bold">•</span> Team Building</li>
+                                            <li className="flex items-center"><span className="text-caramel mr-1.5 font-bold">•</span> 森林療癒</li>
+                                            <li className="flex items-center"><span className="text-caramel mr-1.5 font-bold">•</span> ESG 活動</li>
+                                            <li className="flex items-center"><span className="text-caramel mr-1.5 font-bold">•</span> CSR／企業公益</li>
+                                            <li className="flex items-center"><span className="text-caramel mr-1.5 font-bold">•</span> 永續行動方案</li>
+                                        </ul>
+                                    </div>
+                                    <button 
+                                        onClick={() => setEdmModal({ title: '企業團隊與 ESG 專案方案', type: 'corporate' })}
+                                        className="w-full py-2.5 px-4 bg-forest-700 text-white rounded-xl text-xs font-semibold hover:bg-forest-800 transition-all shadow-sm text-center">
+                                        👉 洽詢企業專屬方案
+                                    </button>
+                                </div>
+
+                                {/* 4. 團體與客製活動 */}
+                                <div className="p-6 rounded-2xl bg-cream border border-wood hover:shadow-lg transition-all flex flex-col justify-between">
+                                    <div>
+                                        <div className="text-3xl mb-3 text-caramel">🎨</div>
+                                        <h4 className="font-serif font-bold text-xl text-forest-700 mb-3">團體與客製活動</h4>
+                                        <ul className="text-coffee text-xs leading-relaxed space-y-2 mb-6 border-t border-wood/30 pt-3">
+                                            <li className="flex items-center"><span className="text-caramel mr-1.5 font-bold">•</span> 半日／一日活動</li>
+                                            <li className="flex items-center"><span className="text-caramel mr-1.5 font-bold">•</span> 兩天一夜行程</li>
+                                            <li className="flex items-center"><span className="text-caramel mr-1.5 font-bold">•</span> 包棟住宿</li>
+                                            <li className="flex items-center"><span className="text-caramel mr-1.5 font-bold">•</span> 團體餐飲</li>
+                                            <li className="flex items-center"><span className="text-caramel mr-1.5 font-bold">•</span> 生態導覽</li>
+                                            <li className="flex items-center"><span className="text-caramel mr-1.5 font-bold">•</span> 食農教育</li>
+                                            <li className="flex items-center"><span className="text-caramel mr-1.5 font-bold">•</span> 森林療癒</li>
+                                            <li className="flex items-center"><span className="text-caramel mr-1.5 font-bold">•</span> 團隊活動</li>
+                                            <li className="flex items-center"><span className="text-caramel mr-1.5 font-bold">•</span> ESG／永續主題</li>
+                                        </ul>
+                                    </div>
+                                    <a 
+                                        href={lineUrl}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="w-full py-2.5 px-4 bg-forest-700 text-white rounded-xl text-xs font-semibold hover:bg-forest-800 transition-all shadow-sm text-center block">
+                                        👉 洽詢客製行程
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* Accommodation Section */}
+                    <section id="accommodation" className="py-24 bg-cream">
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                            <div className="flex flex-col md:flex-row md:items-end justify-between mb-12">
+                                <div>
+                                    <h2 className="text-xs uppercase tracking-widest text-caramel font-semibold mb-3">Accommodation & Facilities</h2>
+                                    <h3 className="text-3xl sm:text-4xl font-serif font-bold text-forest-700">住宿空間與房型設備</h3>
+                                </div>
+                                <p className="text-coffee max-w-md mt-4 md:mt-0 text-sm">
+                                    點選下方房型可查看詳細設備清單與照片，或直接透過 LINE 官方帳號預約您的山林居所。
+                                </p>
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                                {rooms.map((room) => (
+                                    <div key={room.id} className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-wood flex flex-col justify-between">
+                                        <div>
+                                            <div className="h-56 bg-cream-200 relative overflow-hidden cursor-pointer group" onClick={() => setRoomModal(room)}>
+                                                <img 
+                                                    src={resolveImage(room.keys, room.imgFile, room.fallbackImg)} 
+                                                    alt={room.name} 
+                                                    onError={(e) => handleImgError(e, room.keys, room.fallbackImg)}
+                                                    className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500" 
+                                                />
+                                                <div className="absolute top-3 left-3 bg-forest-700/90 backdrop-blur text-white text-xs px-3 py-1 rounded-full font-medium shadow-sm">
+                                                    {room.category}
+                                                </div>
+                                                <div className="absolute inset-0 bg-black/25 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                                    <span className="bg-white/95 text-forest-700 text-xs font-bold px-3.5 py-1.5 rounded-full shadow">查看詳細寫真</span>
+                                                </div>
+                                            </div>
+                                            <div className="p-6">
+                                                <h4 className="text-xl font-serif font-bold text-forest-700 mb-2">{room.name}</h4>
+                                                <p className="text-coffee text-sm leading-relaxed mb-4">{room.desc}</p>
+                                                
+                                                <div className="bg-cream-50 p-3 rounded-xl mb-4 border border-wood/60">
+                                                    <span className="text-xs font-semibold text-caramel block mb-1">💰 房價資訊：</span>
+                                                    <span className="text-xs text-coffee font-medium leading-relaxed block">{room.priceNote}</span>
+                                                </div>
+
+                                                <div className="mb-4">
+                                                    <span className="text-xs font-semibold text-forest-700 block mb-2">✨ 房間與公共設備：</span>
+                                                    <ul className="text-xs text-coffee space-y-1.5 max-h-28 overflow-y-auto pr-1">
+                                                        {room.equipment.map((eq, idx) => (
+                                                            <li key={idx} className="flex items-start">
+                                                                <span className="text-caramel mr-1.5 font-bold">✓</span> {eq}
+                                                            </li>
+                                                        ))}
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="p-6 pt-0 space-y-2">
+                                            <button 
+                                                onClick={() => setRoomModal(room)}
+                                                className="w-full py-2.5 px-4 bg-cream-200 text-forest-700 rounded-xl text-xs font-semibold hover:bg-wood/30 transition-colors border border-wood text-center flex items-center justify-center space-x-1">
+                                                <span>📷 查看詳細寫真分頁</span>
+                                            </button>
+                                            <a 
+                                                href={lineUrl}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="w-full py-3 px-4 bg-forest-700 text-white rounded-xl text-sm font-medium hover:bg-forest-800 transition-colors shadow-sm text-center block">
+                                                立即預約此房型
+                                            </a>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* Seasons Section */}
+                    <section id="seasons" className="py-24 bg-white">
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                            <div className="text-center max-w-3xl mx-auto mb-16">
+                                <h2 className="text-xs uppercase tracking-widest text-caramel font-semibold mb-3">Four Seasons</h2>
+                                <h3 className="text-3xl sm:text-4xl font-serif font-bold text-forest-700">四季旅行・四種慢活風景</h3>
+                                <p className="text-coffee text-sm mt-3">點選下方各季節專屬小標題按鈕，即可深入探索該季節的寫真與導覽分頁。</p>
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                                {seasonsData.map((season) => (
+                                    <div key={season.id} className="bg-cream rounded-2xl overflow-hidden border border-wood flex flex-col justify-between hover:shadow-lg transition-all">
+                                        <div>
+                                            <div className="h-48 relative overflow-hidden">
+                                                <img src={season.img} alt={season.title} className="w-full h-full object-cover" />
+                                                <div className="absolute top-3 left-3 text-2xl bg-white/80 p-1.5 rounded-xl backdrop-blur">
+                                                    {season.icon}
+                                                </div>
+                                            </div>
+                                            <div className="p-6">
+                                                <span className="text-xs font-semibold text-caramel block mb-1">{season.period}</span>
+                                                <h4 className="font-serif font-bold text-lg text-forest-700 mb-3">{season.title}</h4>
+                                                <p className="text-coffee text-xs sm:text-sm leading-relaxed mb-6">{season.desc}</p>
+                                            </div>
+                                        </div>
+                                        <div className="p-6 pt-0">
+                                            <button 
+                                                onClick={() => setSeasonModal(season)}
+                                                className="w-full py-3 px-4 bg-forest-700 text-white rounded-xl text-xs font-semibold hover:bg-forest-800 transition-all shadow-sm text-center flex items-center justify-center space-x-2">
+                                                <span>🌸 {season.title}</span>
+                                                <span>→</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* Activities Section */}
+                    <section id="activities" className="py-24 bg-cream">
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                            <div className="text-center max-w-3xl mx-auto mb-16">
+                                <h2 className="text-xs uppercase tracking-widest text-caramel font-semibold mb-3">Dining & Activities</h2>
+                                <h3 className="text-3xl sm:text-4xl font-serif font-bold text-forest-700">山林美味與夏季水池</h3>
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+                                <div className="bg-white p-8 rounded-3xl border border-wood shadow-sm">
+                                    <span className="text-3xl mb-4 block text-caramel">🍲</span>
+                                    <h4 className="text-2xl font-serif font-bold text-forest-700 mb-3">特色餐飲與預約須知</h4>
+                                    <p className="text-coffee text-sm leading-relaxed mb-6">
+                                        來到飛螢農莊，品嚐最道地的山林好滋味！晚餐服務<strong className="text-forest-700">需前 3-5 天預約</strong>。
+                                    </p>
+                                    <ul className="space-y-3 text-sm text-coffee">
+                                        <li className="flex items-center space-x-2"><span className="w-2 h-2 rounded-full bg-caramel"></span><span>竹筒飯 DIY 體驗</span></li>
+                                        <li className="flex items-center space-x-2"><span className="w-2 h-2 rounded-full bg-caramel"></span><span>桶仔雞料理</span></li>
+                                        <li className="flex items-center space-x-2"><span className="w-2 h-2 rounded-full bg-caramel"></span><span>合菜料理</span></li>
+                                        <li className="flex items-center space-x-2"><span className="w-2 h-2 rounded-full bg-caramel"></span><span>割稻仔飯（僅限團體預約）</span></li>
+                                        <li className="flex items-center space-x-2"><span className="w-2 h-2 rounded-full bg-caramel"></span><span>代訂烤肉組服務</span></li>
+                                    </ul>
+                                </div>
+
+                                <div className="bg-white p-8 rounded-3xl border border-wood shadow-sm">
+                                    <span className="text-3xl mb-4 block text-caramel">💦</span>
+                                    <h4 className="text-2xl font-serif font-bold text-forest-700 mb-3">夏季限定・山泉水戲水池</h4>
+                                    <p className="text-coffee text-sm leading-relaxed mb-6">
+                                        開放期間為 6月下旬至11月上旬，每週六 13:00－18:00。天然山泉水冰涼消暑，是孩子們最愛的戲水天地！
+                                    </p>
+                                    <div className="bg-cream p-4 rounded-2xl border border-wood/70 text-xs text-coffee space-y-2">
+                                        <p>✔ 兒童戲水請家長或同行成人全程陪同照顧。</p>
+                                        <p>✔ 現場備有撈網，讓孩子邊玩水邊觀察自然生態。</p>
+                                        <p>✔ 天然山泉水水溫較低，請評估身體狀況後下水，並隨時留意安全。</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* Transport Section */}
+                    <section id="transport" className="py-24 bg-white border-y border-wood">
+                        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                            <div className="text-center mb-16">
+                                <span className="text-xs uppercase tracking-widest text-caramel font-semibold mb-3 block">Navigation & Access</span>
+                                <h2 className="text-3xl sm:text-4xl font-serif font-bold text-forest-700 mb-4">交通資訊與入住引導</h2>
+                                <p className="text-coffee text-sm max-w-xl mx-auto">
+                                    為了確保您的行車安全與順利抵達，請參閱以下交通導航、安全叮嚀、登記入住流程與周邊觀光導覽。
+                                </p>
+                            </div>
+
+                            <div className="space-y-8">
+                                <div className="bg-cream p-6 sm:p-8 rounded-3xl border border-wood flex flex-col sm:flex-row items-center justify-between gap-6">
+                                    <div>
+                                        <span className="text-xs font-semibold text-caramel uppercase tracking-wider block mb-1">📍 Google導航定位</span>
+                                        <h3 className="text-xl font-serif font-bold text-forest-700 mb-2">飛螢農莊精確定位導航</h3>
+                                        <p className="text-coffee text-xs sm:text-sm">點擊按鈕即可直接開啟 Google Maps 開始導航至農莊。</p>
+                                    </div>
+                                    <a href="https://maps.app.goo.gl/ksYityNxPLWynUyC6" target="_blank" rel="noopener noreferrer" 
+                                       className="w-full sm:w-auto px-6 py-3.5 bg-forest-700 text-white rounded-xl text-sm font-medium hover:bg-forest-800 transition-all text-center shadow-md whitespace-nowrap">
+                                        開啟 Google 導航
+                                    </a>
+                                </div>
+
+                                <div className="bg-amber-50/80 p-6 sm:p-8 rounded-3xl border border-amber-200">
+                                    <h3 className="text-xl font-serif font-bold text-amber-900 mb-4 flex items-center">
+                                        <span className="text-2xl mr-2">⚠️</span> 山路行車安全注意事項
+                                    </h3>
+                                    <ol className="space-y-3 text-sm text-amber-900/90">
+                                        <li className="flex items-start">
+                                            <span className="w-6 h-6 rounded-full bg-amber-700 text-white flex items-center justify-center text-xs font-bold mr-3 mt-0.5 shrink-0">1</span>
+                                            <span>提醒一聲，如果您們從國道1號交流道／銅鑼／三義（山線）方向過來民宿，進入園區路口會遇到大迴轉與下坡，請開車的大大們特別留意角度喔～</span>
+                                        </li>
+                                        <li className="flex items-start">
+                                            <span className="w-6 h-6 rounded-full bg-amber-700 text-white flex items-center justify-center text-xs font-bold mr-3 mt-0.5 shrink-0">2</span>
+                                            <span>提前跟您說一聲，因為我們這邊是螢火蟲復育區，除了住宿區域以外的路段，較少路燈照明💡，晚上六點後（夏季七點後）進入園區一定要放慢車速，小心行駛🚗。</span>
+                                        </li>
+                                    </ol>
+                                </div>
+
+                                <div className="bg-cream p-6 sm:p-8 rounded-3xl border border-wood">
+                                    <h3 className="text-xl font-serif font-bold text-forest-700 mb-6 flex items-center">
+                                        <span className="text-2xl mr-2">📋</span> 登記入住流程
+                                    </h3>
+                                    <ol className="space-y-4 text-sm text-coffee">
+                                        <li className="flex items-start">
+                                            <span className="w-6 h-6 rounded-full bg-forest-700 text-white flex items-center justify-center text-xs font-bold mr-3 mt-0.5 shrink-0">1</span>
+                                            <span>抵達時請先於“停車登記”的指示標語前等候，稍後會有專人接待。</span>
+                                        </li>
+                                        <li className="flex items-start">
+                                            <span className="w-6 h-6 rounded-full bg-forest-700 text-white flex items-center justify-center text-xs font-bold mr-3 mt-0.5 shrink-0">2</span>
+                                            <span>請先於民宿前卸貨行李，為您介紹房間的位置。</span>
+                                        </li>
+                                        <li className="flex items-start">
+                                            <span className="w-6 h-6 rounded-full bg-forest-700 text-white flex items-center justify-center text-xs font-bold mr-3 mt-0.5 shrink-0">3</span>
+                                            <span>專人引導您的愛車停放指定位置。</span>
+                                        </li>
+                                        <li className="flex items-start">
+                                            <span className="w-6 h-6 rounded-full bg-forest-700 text-white flex items-center justify-center text-xs font-bold mr-3 mt-0.5 shrink-0">4</span>
+                                            <span>每輛車（每間房間）需派一位住客至生態教室做登記入住的手續，說明住宿公約內容，結算房費尾款。</span>
+                                        </li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* Updated FAQ Section (Based on Word Document) */}
+                    <section id="faq" className="py-24 bg-white">
+                        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                            <div className="text-center mb-12">
+                                <span className="text-xs uppercase tracking-widest text-caramel font-semibold mb-3 block">FAQ & Guidelines</span>
+                                <h2 className="text-3xl sm:text-4xl font-serif font-bold text-forest-700 mb-3">常見問題 FAQ</h2>
+                                <p className="text-coffee text-sm max-w-2xl mx-auto leading-relaxed">
+                                    入住飛螢前，想知道的事，我們都整理好了。<br />
+                                    第一次來飛螢農莊，從房型選擇、親子設備，到入住、餐飲、交通與山林安全，我們把旅人最常詢問的問題整理在這裡。希望出發前多一點準備，到了山上，就能少一點匆忙，好好享受一家人在山林裡的時光。
+                                </p>
+                            </div>
+
+                            {/* Category Filter Tabs */}
+                            <div className="flex flex-wrap justify-center gap-2 mb-10">
+                                {faqCategories.map((cat, idx) => (
+                                    <button
+                                        key={cat.id}
+                                        onClick={() => setActiveCategory(idx)}
+                                        className={`px-4 py-2.5 rounded-full text-xs sm:text-sm font-medium transition-all flex items-center space-x-1.5 shadow-sm ${
+                                            activeCategory === idx
+                                                ? 'bg-forest-700 text-white shadow-md scale-105'
+                                                : 'bg-cream border border-wood/60 text-coffee hover:bg-cream-200'
+                                        }`}
+                                    >
+                                        <span>{cat.icon}</span>
+                                        <span>{cat.id}｜{cat.title}</span>
+                                    </button>
+                                ))}
+                            </div>
+
+                            {/* Display Currently Active Category Content */}
+                            {faqCategories.map((category, catIndex) => {
+                                if (catIndex !== activeCategory) return null;
+                                return (
+                                    <div key={category.id} className="space-y-4 animate-fadeIn">
+                                        <div className="flex items-center space-x-3 pb-3 border-b border-wood/30 mb-6">
+                                            <span className="text-3xl">{category.icon}</span>
+                                            <div>
+                                                <span className="text-xs font-bold text-caramel tracking-widest uppercase">{category.id} 分類內容</span>
+                                                <h3 className="text-xl sm:text-2xl font-serif font-bold text-forest-700">{category.title}</h3>
+                                                {category.subtitle && (
+                                                    <p className="text-xs text-coffee/80 mt-0.5">{category.subtitle}</p>
+                                                )}
+                                            </div>
+                                        </div>
+
+                                        <div className="space-y-4">
+                                            {category.faqs.map((faq, faqIndex) => {
+                                                const key = `${catIndex}-${faqIndex}`;
+                                                const isOpen = openFaqIndex[key] !== undefined ? openFaqIndex[key] : faqIndex === 0;
+
+                                                return (
+                                                    <div key={faqIndex} className="border border-wood/70 rounded-2xl overflow-hidden bg-cream shadow-sm hover:border-forest-600 transition-colors">
+                                                        <button 
+                                                            onClick={() => toggleFaq(catIndex, faqIndex)}
+                                                            className="w-full px-6 py-5 text-left font-serif font-bold text-forest-700 flex justify-between items-center hover:bg-wood/10 transition-colors text-base sm:text-lg">
+                                                            <span className="pr-4">{faq.q}</span>
+                                                            <span className="text-caramel text-xl shrink-0 font-mono font-bold">{isOpen ? '−' : '+'}</span>
+                                                        </button>
+                                                        {isOpen && (
+                                                            <div className="px-6 pb-6 text-sm text-coffee leading-relaxed border-t border-wood/30 pt-4 bg-white/60">
+                                                                {faq.a}
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                );
+                                            })}
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </section>
+
+                    {/* Footer */}
+                    <footer className="bg-forest-900 text-cream-200 py-16 border-t border-forest-800">
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-12">
+                                <div>
+                                    <span className="text-2xl font-serif font-bold text-white tracking-wider block mb-3">飛螢農莊</span>
+                                    <p className="text-sm text-cream-200/80 leading-relaxed">
+                                        住進山林，讓生活重新與自然連在一起。親子生態旅遊、家族包棟與企業ESG教育的最佳基地。
+                                    </p>
+                                </div>
+                                <div className="space-y-2 text-sm">
+                                    <p className="font-semibold text-white mb-2">聯絡資訊</p>
+                                    <p>電話諮詢：0975-783371（農莊專線：037-783371）</p>
+                                    <p>官方 LINE：<a href={lineUrl} target="_blank" rel="noopener noreferrer" className="underline text-wood-light hover:text-white font-mono">@xat.0000109878.m4f</a></p>
+                                    <p>臉書快訊：<a href="https://www.facebook.com/share/19KH7dHAkk/" target="_blank" rel="noopener noreferrer" className="underline text-wood-light hover:text-white">Facebook 粉絲專頁</a></p>
+                                    <p>導航地圖：<a href="https://maps.app.goo.gl/ksYityNxPLWynUyC6" target="_blank" rel="noopener noreferrer" className="underline text-wood-light hover:text-white">Google Maps 導航</a></p>
+                                </div>
+                                <div className="space-y-2 text-sm">
+                                    <p className="font-semibold text-white mb-2">快速連結</p>
+                                    <div className="flex flex-col space-y-1.5">
+                                        <a href="#about" onClick={(e) => { e.preventDefault(); scrollToSection('about'); }} className="hover:text-white transition-colors cursor-pointer">關於飛螢（返回首頁）</a>
+                                        <a href="#accommodation" onClick={(e) => { e.preventDefault(); scrollToSection('accommodation'); }} className="hover:text-white transition-colors cursor-pointer">住宿空間與設備</a>
+                                        <a href="#transport" onClick={(e) => { e.preventDefault(); scrollToSection('transport'); }} className="hover:text-white transition-colors cursor-pointer">交通資訊與入住引導</a>
+                                        <a href={lineUrl} target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors cursor-pointer">官方 LINE 訂房諮詢</a>
+                                        <a href="#faq" onClick={(e) => { e.preventDefault(); scrollToSection('faq'); }} className="hover:text-white transition-colors cursor-pointer">常見問題與公約</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="border-t border-forest-800 pt-8 text-center text-xs text-wood-light/60">
+                                <p>© 飛螢農莊 All Rights Reserved.｜住進山林，把生活過得慢一點。</p>
+                            </div>
+                        </div>
+                    </footer>
+
+                    {/* Floating Quick Action Bar */}
+                    <div className="fixed bottom-6 right-6 z-40 flex flex-col space-y-3">
+                        <a href="https://www.facebook.com/share/19KH7dHAkk/" target="_blank" rel="noopener noreferrer" 
+                           className="w-14 h-14 bg-blue-600 text-white rounded-full shadow-2xl flex items-center justify-center hover:bg-blue-700 transition-all transform hover:scale-105" title="臉書快訊">
+                            <svg className="w-6 h-6 fill-current" viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.8c4.56-.93 8-4.96 8-9.8z"/></svg>
+                        </a>
+                        <a href={lineUrl} target="_blank" rel="noopener noreferrer" 
+                           className="w-14 h-14 bg-emerald-600 text-white rounded-full shadow-2xl flex items-center justify-center hover:bg-emerald-700 transition-all transform hover:scale-105" title="官方 LINE (@xat.0000109878.m4f)">
+                            <svg className="w-7 h-7 fill-current" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.03 2 11c0 2.87 1.48 5.41 3.77 7.07-.15.82-.77 2.97-.88 3.39-.21.84.31 1.25.9.82 2.31-1.39 4.35-2.61 5.34-3.23.63.1 1.28.16 1.97.16 5.52 0 10-4.03 10-9s-4.48-9-10-9z"/></svg>
+                        </a>
+                        <a href="tel:0975783371" 
+                           className="w-14 h-14 bg-forest-700 text-white rounded-full shadow-2xl flex items-center justify-center hover:bg-forest-800 transition-all transform hover:scale-105" title="電話諮詢">
+                            <svg className="w-6 h-6 fill-current" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+                        </a>
+                    </div>
+
+                    {/* Room Modal */}
+                    {roomModal && (
+                        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+                            <div className="bg-white rounded-3xl max-w-3xl w-full max-h-[90vh] overflow-y-auto p-6 sm:p-8 shadow-2xl">
+                                <div className="flex justify-between items-start mb-4">
+                                    <div>
+                                        <span className="text-xs font-semibold text-forest-700 px-3 py-1 bg-forest-50 rounded-full">{roomModal.category}</span>
+                                        <h3 className="text-2xl font-serif font-bold text-forest-700 mt-2">{roomModal.name} - 詳細寫真與設備</h3>
+                                    </div>
+                                    <button onClick={() => setRoomModal(null)} className="w-10 h-10 rounded-full bg-cream flex items-center justify-center text-coffee hover:bg-wood/20 transition-colors font-bold text-lg">✕</button>
+                                </div>
+                                <p className="text-coffee text-sm mb-6">{roomModal.desc}</p>
+                                
+                                <div className="mb-6">
+                                    <h4 className="font-serif font-bold text-forest-700 mb-3 text-sm">📸 房型詳細寫真集</h4>
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
+                                        {roomModal.gallery.map((photo, i) => {
+                                            const photoUrl = resolveImage(photo.keys, photo.file, photo.fallback);
+                                            const photoTitle = photo.name;
+                                            return (
+                                                <div key={i} className="h-40 rounded-xl overflow-hidden bg-cream-200 relative group border border-wood shadow-sm">
+                                                    <img 
+                                                        src={photoUrl} 
+                                                        alt={photoTitle} 
+                                                        onError={(e) => handleImgError(e, photo.keys, photo.fallback)}
+                                                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" 
+                                                    />
+                                                    <div className="absolute bottom-2 left-2 right-2 bg-black/70 backdrop-blur text-white text-xs px-2.5 py-1 rounded-lg font-medium truncate">
+                                                        {photoTitle}
+                                                    </div>
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+                                </div>
+
+                                <div className="bg-cream p-4 rounded-2xl mb-6 border border-wood">
+                                    <h4 className="font-serif font-bold text-forest-700 mb-2 text-sm">✨ 房型專屬設備清單</h4>
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                                        {roomModal.equipment.map((eq, i) => (
+                                            <div key={i} className="text-xs text-coffee flex items-center">
+                                                <span className="text-caramel mr-1.5 font-bold">✓</span> {eq}
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                <div className="flex justify-end space-x-3">
+                                    <button onClick={() => setRoomModal(null)} className="px-5 py-2.5 rounded-xl border border-wood text-coffee text-sm hover:bg-cream">關閉</button>
+                                    <a 
+                                        href={lineUrl}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="px-6 py-2.5 rounded-xl bg-forest-700 text-white text-sm font-medium hover:bg-forest-800 inline-block">
+                                        立即預約此房型
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Season Modal */}
+                    {seasonModal && (
+                        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+                            <div className="bg-white rounded-3xl max-w-3xl w-full max-h-[90vh] overflow-y-auto p-6 sm:p-8 shadow-2xl">
+                                <div className="flex justify-between items-start mb-4">
+                                    <div>
+                                        <span className="text-xs font-semibold text-caramel px-3 py-1 bg-cream-200 rounded-full">{seasonModal.period}</span>
+                                        <h3 className="text-2xl font-serif font-bold text-forest-700 mt-2">{seasonModal.icon} {seasonModal.title}</h3>
+                                    </div>
+                                    <button onClick={() => setSeasonModal(null)} className="w-10 h-10 rounded-full bg-cream flex items-center justify-center text-coffee hover:bg-wood/20 transition-colors font-bold text-lg">✕</button>
+                                </div>
+                                <p className="text-coffee text-sm leading-relaxed mb-6">{seasonModal.desc}</p>
+                                
+                                <div className="mb-6">
+                                    <h4 className="font-serif font-bold text-forest-700 mb-3 text-sm">📸 季節專屬寫真集</h4>
+                                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                                        {seasonModal.gallery.map((photo, i) => (
+                                            <div key={i} className="h-32 rounded-xl overflow-hidden bg-cream-200 relative group border border-wood">
+                                                <img src={photo} alt={`${seasonModal.title} 照片 ${i+1}`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                                                <div className="absolute bottom-1 right-1 bg-black/60 text-white text-[10px] px-2 py-0.5 rounded">寫真 #{i+1}</div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                <div className="flex justify-end">
+                                    <button onClick={() => setSeasonModal(null)} className="px-6 py-2.5 rounded-xl bg-forest-700 text-white text-sm font-medium hover:bg-forest-800">關閉分頁</button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {/* EDM Modal */}
+                    {edmModal && (
+                        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+                            <div className="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6 sm:p-8 shadow-2xl">
+                                <div className="flex justify-between items-start mb-4">
+                                    <div>
+                                        <span className="text-xs font-semibold text-caramel px-3 py-1 bg-cream-200 rounded-full">專案企劃預覽</span>
+                                        <h3 className="text-2xl font-serif font-bold text-forest-700 mt-2">📄 {edmModal.title}</h3>
+                                    </div>
+                                    <button onClick={() => setEdmModal(null)} className="w-10 h-10 rounded-full bg-cream flex items-center justify-center text-coffee hover:bg-wood/20 transition-colors font-bold text-lg">✕</button>
+                                </div>
+                                
+                                <div className="bg-cream p-6 rounded-2xl border border-wood mb-6 space-y-4 text-sm text-coffee">
+                                    {edmModal.type === 'corporate' ? (
+                                        <>
+                                            <p className="font-serif font-bold text-forest-700 text-base">🌲 企業 ESG 永續合作與年會場域方案</p>
+                                            <p>飛螢農莊提供結合 OECM 生態保育、自然共生與團隊合作的深度體驗。我們協助企業將永續發展理念具現化，包含森林生態導覽、動手做共學體驗以及專業團體聚會空間。</p>
+                                            <div className="bg-white p-4 rounded-xl border border-wood/60">
+                                                <p className="font-semibold text-forest-700 mb-1">💰 企業專案報價參考：</p>
+                                                <p className="text-xs">依據參訪人數、餐飲需求與半日/一日/兩天一夜行程客製化報價。歡迎透過官方 LINE 洽詢專屬企業專案。</p>
+                                            </div>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <p className="font-serif font-bold text-forest-700 text-base">🎒 學校戶外教學與食農教育課程專案</p>
+                                            <p>給孩子最棒的戶外自然教室！我們提供竹筒飯DIY、夜探山林生態、手作餅乾及攀樹走繩等多樣化戶外教育體驗，讓學生在實際動手中理解土地與生態的價值。</p>
+                                            <div className="bg-white p-4 rounded-xl border border-wood/60">
+                                                <p className="font-semibold text-forest-700 mb-1">💰 學校團體課程報價參考：</p>
+                                                <p className="text-xs">依學生年齡層與課程模組彈性調整，提供團體優惠方案。歡迎老師或校方與我們聯繫。</p>
+                                            </div>
+                                        </>
+                                    )}
+
+                                    <div className="h-48 bg-cream-200 rounded-xl flex items-center justify-center text-coffee text-xs italic border border-wood/40">
+                                        （ 專案 EDM 圖片與精美排版・待補 ）
+                                    </div>
+                                </div>
+
+                                <div className="flex justify-end space-x-3">
+                                    <button onClick={() => setEdmModal(null)} className="px-5 py-2.5 rounded-xl border border-wood text-coffee text-sm hover:bg-cream">關閉</button>
+                                    <a href={lineUrl} target="_blank" rel="noopener noreferrer" className="px-6 py-2.5 rounded-xl bg-forest-700 text-white text-sm font-medium hover:bg-forest-800 inline-flex items-center">
+                                        洽詢專案與索取完整EDM
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            );
+        }
+
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+</html>

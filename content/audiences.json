@@ -1,0 +1,34 @@
+{
+  "kicker": "Tailored Experience",
+  "heading": "專屬體驗",
+  "cards": [
+    {
+      "id": "family",
+      "icon": "👨‍👩‍👧‍👦",
+      "title": "親子與家庭",
+      "items": ["親子家庭", "親友團體", "家庭聚會", "生日／紀念日", "親子生態旅行"],
+      "button": { "label": "👉 探索親子體驗", "kind": "anchor", "value": "accommodation" }
+    },
+    {
+      "id": "school",
+      "icon": "🎒",
+      "title": "學校與戶外教學",
+      "items": ["幼兒園／國小／國中戶外教學", "食農教育", "環境教育", "生態探索", "校外教學", "主題式學習活動"],
+      "button": { "label": "👉 了解戶外教學方案", "kind": "edm", "value": "school" }
+    },
+    {
+      "id": "corporate",
+      "icon": "🏢",
+      "title": "企業與團隊",
+      "items": ["企業員工旅遊", "團隊共識營", "Team Building", "森林療癒", "ESG 活動", "CSR／企業公益", "永續行動方案"],
+      "button": { "label": "👉 洽詢企業專屬方案", "kind": "edm", "value": "corporate" }
+    },
+    {
+      "id": "group",
+      "icon": "🎨",
+      "title": "團體與客製活動",
+      "items": ["半日／一日活動", "兩天一夜行程", "包棟住宿", "團體餐飲", "生態導覽", "食農教育", "森林療癒", "團隊活動", "ESG／永續主題"],
+      "button": { "label": "👉 洽詢客製行程", "kind": "shared", "value": "line" }
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "badge": "專案企劃預覽",
+  "closeLabel": "關閉",
+  "items": [
+    {
+      "id": "school",
+      "title": "學校戶外教學與食農教育方案",
+      "heading": "🎒 學校戶外教學與食農教育課程專案",
+      "body": "給孩子最棒的戶外自然教室！我們提供竹筒飯DIY、夜探山林生態、手作餅乾及攀樹走繩等多樣化戶外教育體驗，讓學生在實際動手中理解土地與生態的價值。",
+      "priceTitle": "💰 學校團體課程報價參考：",
+      "priceText": "依學生年齡層與課程模組彈性調整，提供團體優惠方案。歡迎老師或校方與我們聯繫。",
+      "image": { "src": "", "alt": "學校戶外教學方案 EDM" },
+      "imagePlaceholder": "（ 專案 EDM 圖片與精美排版・待補 ）",
+      "button": { "label": "洽詢專案與索取完整EDM", "kind": "shared", "value": "line" }
+    },
+    {
+      "id": "corporate",
+      "title": "企業團隊與 ESG 專案方案",
+      "heading": "🌲 企業 ESG 永續合作與年會場域方案",
+      "body": "飛螢農莊提供結合 OECM 生態保育、自然共生與團隊合作的深度體驗。我們協助企業將永續發展理念具現化，包含森林生態導覽、動手做共學體驗以及專業團體聚會空間。",
+      "priceTitle": "💰 企業專案報價參考：",
+      "priceText": "依據參訪人數、餐飲需求與半日/一日/兩天一夜行程客製化報價。歡迎透過官方 LINE 洽詢專屬企業專案。",
+      "image": { "src": "", "alt": "企業 ESG 專案 EDM" },
+      "imagePlaceholder": "（ 專案 EDM 圖片與精美排版・待補 ）",
+      "button": { "label": "洽詢專案與索取完整EDM", "kind": "shared", "value": "line" }
+    }
+  ]
+}
