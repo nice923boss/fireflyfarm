@@ -7,61 +7,176 @@
     "description": "苗栗通霄親子生態民宿與包棟聚會首選。讓孩子在草地上奔跑、玩山泉水、認識昆蟲；讓大人暫時放下忙碌，好好吃一頓竹筒飯、看一片山、聽一晚蟲鳴。"
   },
   "links": {
-    "line": { "label": "官方 LINE", "url": "https://page.line.me/xat.0000109878.m4f?oat_content=url&openQrModal=true" },
-    "facebook": { "label": "Facebook 粉絲專頁", "url": "https://www.facebook.com/share/19KH7dHAkk/" },
-    "maps": { "label": "Google Maps 導航", "url": "https://maps.app.goo.gl/ksYityNxPLWynUyC6" },
-    "phone_mobile": { "label": "手機 0975-783371", "url": "tel:0975783371" },
-    "phone_office": { "label": "農莊專線 037-783371", "url": "tel:037783371" }
+    "line": {
+      "label": "官方 LINE",
+      "url": "https://page.line.me/xat.0000109878.m4f?oat_content=url&openQrModal=true"
+    },
+    "facebook": {
+      "label": "Facebook 粉絲專頁",
+      "url": "https://www.facebook.com/share/19KH7dHAkk/"
+    },
+    "maps": {
+      "label": "Google Maps 導航",
+      "url": "https://maps.app.goo.gl/ksYityNxPLWynUyC6"
+    },
+    "phone_mobile": {
+      "label": "手機 0975-783371",
+      "url": "tel:0975783371"
+    },
+    "phone_office": {
+      "label": "農莊專線 037-783371",
+      "url": "tel:037783371"
+    }
   },
   "nav": [
-    { "label": "關於飛螢", "target": "about" },
-    { "label": "住宿空間", "target": "accommodation" },
-    { "label": "四季旅行", "target": "seasons" },
-    { "label": "專屬體驗", "target": "audiences" },
-    { "label": "活動與餐飲", "target": "activities" },
-    { "label": "交通資訊", "target": "transport", "highlight": true },
-    { "label": "常見問題", "target": "faq" }
+    {
+      "label": "關於飛螢",
+      "target": "about"
+    },
+    {
+      "label": "住宿空間",
+      "target": "accommodation"
+    },
+    {
+      "label": "四季旅行",
+      "target": "seasons"
+    },
+    {
+      "label": "專屬體驗",
+      "target": "audiences"
+    },
+    {
+      "label": "活動與餐飲",
+      "target": "activities"
+    },
+    {
+      "label": "交通資訊",
+      "target": "transport",
+      "highlight": true
+    },
+    {
+      "label": "常見問題",
+      "target": "faq"
+    }
   ],
   "headerButtons": {
-    "facebook": { "label": "臉書快訊", "kind": "shared", "value": "facebook" },
-    "line": { "label": "官方 LINE", "kind": "shared", "value": "line" },
-    "primary": { "label": "立即預約", "kind": "shared", "value": "line" }
+    "facebook": {
+      "label": "臉書快訊",
+      "kind": "shared",
+      "value": "facebook"
+    },
+    "line": {
+      "label": "官方 LINE",
+      "kind": "shared",
+      "value": "line"
+    },
+    "primary": {
+      "label": "立即預約",
+      "kind": "shared",
+      "value": "line"
+    }
   },
   "hero": {
     "badge": "🌿 苗栗通霄・親子生態民宿與包棟聚會首選",
     "title": "住進山林，\n把生活過得慢一點。",
     "subtitle": "來到飛螢農莊，讓孩子在草地上奔跑、玩山泉水、認識昆蟲；讓大人暫時放下忙碌，好好吃一頓竹筒飯、看一片山、聽一晚蟲鳴。",
     "image": {
-      "src": "https://images.unsplash.com/photo-1511497584788-8767611925b4?auto=format&fit=crop&w=1920&q=80",
+      "src": "images/1789445915767-gemini-generated-image-6rz9og6rz9og6rz9.jpg",
       "alt": "飛螢農莊山林景致"
     },
     "buttons": [
-      { "label": "探索房型與設備", "kind": "anchor", "value": "accommodation" },
-      { "label": "LINE 官方帳號預約", "kind": "shared", "value": "line" }
+      {
+        "label": "探索房型與設備",
+        "kind": "anchor",
+        "value": "accommodation"
+      },
+      {
+        "label": "LINE 官方帳號預約",
+        "kind": "shared",
+        "value": "line"
+      }
     ]
   },
   "footer": {
     "about": "住進山林，讓生活重新與自然連在一起。親子生態旅遊、家族包棟與企業ESG教育的最佳基地。",
     "contactTitle": "聯絡資訊",
     "contactLines": [
-      { "prefix": "電話諮詢：0975-783371（農莊專線：037-783371）" },
-      { "prefix": "官方 LINE：", "link": { "label": "@xat.0000109878.m4f", "kind": "shared", "value": "line" } },
-      { "prefix": "臉書快訊：", "link": { "label": "Facebook 粉絲專頁", "kind": "shared", "value": "facebook" } },
-      { "prefix": "導航地圖：", "link": { "label": "Google Maps 導航", "kind": "shared", "value": "maps" } }
+      {
+        "prefix": "電話諮詢：0975-783371（農莊專線：037-783371）"
+      },
+      {
+        "prefix": "官方 LINE：",
+        "link": {
+          "label": "@xat.0000109878.m4f",
+          "kind": "shared",
+          "value": "line"
+        }
+      },
+      {
+        "prefix": "臉書快訊：",
+        "link": {
+          "label": "Facebook 粉絲專頁",
+          "kind": "shared",
+          "value": "facebook"
+        }
+      },
+      {
+        "prefix": "導航地圖：",
+        "link": {
+          "label": "Google Maps 導航",
+          "kind": "shared",
+          "value": "maps"
+        }
+      }
     ],
     "quickLinksTitle": "快速連結",
     "quickLinks": [
-      { "label": "關於飛螢（返回首頁）", "kind": "anchor", "value": "about" },
-      { "label": "住宿空間與設備", "kind": "anchor", "value": "accommodation" },
-      { "label": "交通資訊與入住引導", "kind": "anchor", "value": "transport" },
-      { "label": "官方 LINE 訂房諮詢", "kind": "shared", "value": "line" },
-      { "label": "常見問題與公約", "kind": "anchor", "value": "faq" }
+      {
+        "label": "關於飛螢（返回首頁）",
+        "kind": "anchor",
+        "value": "about"
+      },
+      {
+        "label": "住宿空間與設備",
+        "kind": "anchor",
+        "value": "accommodation"
+      },
+      {
+        "label": "交通資訊與入住引導",
+        "kind": "anchor",
+        "value": "transport"
+      },
+      {
+        "label": "官方 LINE 訂房諮詢",
+        "kind": "shared",
+        "value": "line"
+      },
+      {
+        "label": "常見問題與公約",
+        "kind": "anchor",
+        "value": "faq"
+      }
     ],
     "copyright": "© 飛螢農莊 All Rights Reserved.｜住進山林，把生活過得慢一點。"
   },
   "floatingBar": [
-    { "icon": "facebook", "label": "臉書快訊", "kind": "shared", "value": "facebook" },
-    { "icon": "line", "label": "官方 LINE (@xat.0000109878.m4f)", "kind": "shared", "value": "line" },
-    { "icon": "phone", "label": "電話諮詢", "kind": "shared", "value": "phone_mobile" }
+    {
+      "icon": "facebook",
+      "label": "臉書快訊",
+      "kind": "shared",
+      "value": "facebook"
+    },
+    {
+      "icon": "line",
+      "label": "官方 LINE (@xat.0000109878.m4f)",
+      "kind": "shared",
+      "value": "line"
+    },
+    {
+      "icon": "phone",
+      "label": "電話諮詢",
+      "kind": "shared",
+      "value": "phone_mobile"
+    }
   ]
 }

@@ -12,7 +12,11 @@
     "modalEquipmentTitle": "✨ 房型專屬設備清單",
     "modalClose": "關閉"
   },
-  "bookButton": { "label": "立即預約此房型", "kind": "shared", "value": "line" },
+  "bookButton": {
+    "label": "立即預約此房型",
+    "kind": "shared",
+    "value": "line"
+  },
   "cards": [
     {
       "id": "whole",
@@ -21,7 +25,7 @@
       "desc": "共五間套房（4人套房4間、6人閣樓套房1間），包含星閣、和光、粉霧、森白、藍汐五大特色主題房，適合家庭與親友團體一同入住。",
       "priceNote": "一般假日 $22000 / 連假及螢火蟲季 $27000 / 平日 $17500",
       "image": {
-        "src": "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=800&q=80",
+        "src": "images/1789446068549-photo.jpg",
         "alt": "飛螢農莊 (包棟)"
       },
       "equipment": [
@@ -45,13 +49,34 @@
         "公共區域奶瓶蒸氣消毒鍋"
       ],
       "gallery": [
-        { "src": "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=800&q=80", "caption": "包棟民宿外觀全景" },
-        { "src": "https://images.unsplash.com/photo-1540518614846-7ede433c4550?auto=format&fit=crop&w=800&q=80", "caption": "星閣 (六人閣樓套房)" },
-        { "src": "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=800&q=80", "caption": "和光 (四人套房)" },
-        { "src": "https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=800&q=80", "caption": "粉霧 (四人套房)" },
-        { "src": "https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?auto=format&fit=crop&w=800&q=80", "caption": "森白 (四人套房)" },
-        { "src": "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80", "caption": "藍汐 (四人套房)" },
-        { "src": "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80", "caption": "公共交誼客廳" }
+        {
+          "src": "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=800&q=80",
+          "caption": "包棟民宿外觀全景"
+        },
+        {
+          "src": "https://images.unsplash.com/photo-1540518614846-7ede433c4550?auto=format&fit=crop&w=800&q=80",
+          "caption": "星閣 (六人閣樓套房)"
+        },
+        {
+          "src": "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=800&q=80",
+          "caption": "和光 (四人套房)"
+        },
+        {
+          "src": "https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=800&q=80",
+          "caption": "粉霧 (四人套房)"
+        },
+        {
+          "src": "https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?auto=format&fit=crop&w=800&q=80",
+          "caption": "森白 (四人套房)"
+        },
+        {
+          "src": "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80",
+          "caption": "藍汐 (四人套房)"
+        },
+        {
+          "src": "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80",
+          "caption": "公共交誼客廳"
+        }
       ]
     },
     {
@@ -84,12 +109,30 @@
         "公共區域奶瓶蒸氣消毒鍋"
       ],
       "gallery": [
-        { "src": "https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=800&q=80", "caption": "八人套房空間全景" },
-        { "src": "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80", "caption": "三合院古樸中庭" },
-        { "src": "https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?auto=format&fit=crop&w=800&q=80", "caption": "小客廳休息區" },
-        { "src": "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=800&q=80", "caption": "寢室溫馨床位" },
-        { "src": "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80", "caption": "乾淨獨立衛浴" },
-        { "src": "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80", "caption": "三合院走廊憩腳區" }
+        {
+          "src": "https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=800&q=80",
+          "caption": "八人套房空間全景"
+        },
+        {
+          "src": "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80",
+          "caption": "三合院古樸中庭"
+        },
+        {
+          "src": "https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?auto=format&fit=crop&w=800&q=80",
+          "caption": "小客廳休息區"
+        },
+        {
+          "src": "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=800&q=80",
+          "caption": "寢室溫馨床位"
+        },
+        {
+          "src": "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80",
+          "caption": "乾淨獨立衛浴"
+        },
+        {
+          "src": "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80",
+          "caption": "三合院走廊憩腳區"
+        }
       ]
     },
     {
@@ -99,7 +142,7 @@
       "desc": "不趕行程，才有時間生活。包含2人、4人與6人樓中樓房型，附設小客廳與簡易廚房。",
       "priceNote": "一般假日包棟 $18900 / 連假及螢火蟲季包棟 $23000 / 平日包棟 $15000",
       "image": {
-        "src": "https://images.unsplash.com/photo-1507089947368-19c1da9775ae?auto=format&fit=crop&w=800&q=80",
+        "src": "images/1789446224735-photo.jpg",
         "alt": "山上住久"
       },
       "equipment": [
@@ -122,12 +165,30 @@
         "公共區域奶瓶蒸氣消毒鍋"
       ],
       "gallery": [
-        { "src": "https://images.unsplash.com/photo-1507089947368-19c1da9775ae?auto=format&fit=crop&w=800&q=80", "caption": "山上住久獨立山居建築" },
-        { "src": "https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?auto=format&fit=crop&w=800&q=80", "caption": "溫馨舒適小客廳" },
-        { "src": "https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=800&q=80", "caption": "簡易廚房料理台" },
-        { "src": "https://images.unsplash.com/photo-1540518614846-7ede433c4550?auto=format&fit=crop&w=800&q=80", "caption": "樓中樓溫馨臥房" },
-        { "src": "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=800&q=80", "caption": "採光雙人房套房" },
-        { "src": "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80", "caption": "戶外露台綠意景觀" }
+        {
+          "src": "https://images.unsplash.com/photo-1507089947368-19c1da9775ae?auto=format&fit=crop&w=800&q=80",
+          "caption": "山上住久獨立山居建築"
+        },
+        {
+          "src": "https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?auto=format&fit=crop&w=800&q=80",
+          "caption": "溫馨舒適小客廳"
+        },
+        {
+          "src": "https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=800&q=80",
+          "caption": "簡易廚房料理台"
+        },
+        {
+          "src": "https://images.unsplash.com/photo-1540518614846-7ede433c4550?auto=format&fit=crop&w=800&q=80",
+          "caption": "樓中樓溫馨臥房"
+        },
+        {
+          "src": "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=800&q=80",
+          "caption": "採光雙人房套房"
+        },
+        {
+          "src": "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80",
+          "caption": "戶外露台綠意景觀"
+        }
       ]
     },
     {
@@ -137,7 +198,7 @@
       "desc": "四棟獨立小木屋，樓中樓四人套房，房間裡設有遊戲區，享受專屬於山裡的慢生活節奏。",
       "priceNote": "一般假日 $5690/棟 / 連假及螢火蟲季 $6300/棟 / 平日 $4500/棟",
       "image": {
-        "src": "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=800&q=80",
+        "src": "images/1789446251861-4807f985-ec72-4f34-9a08-a1206a5563c3.jpg",
         "alt": "山上住久・小木屋"
       },
       "equipment": [
@@ -161,12 +222,30 @@
         "公共區域奶瓶蒸氣消毒鍋"
       ],
       "gallery": [
-        { "src": "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=800&q=80", "caption": "小木屋群戶外庭園與烤肉區" },
-        { "src": "https://images.unsplash.com/photo-1540518614846-7ede433c4550?auto=format&fit=crop&w=800&q=80", "caption": "原木風格樓中樓內部" },
-        { "src": "https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=800&q=80", "caption": "房內兒童小遊戲區" },
-        { "src": "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=800&q=80", "caption": "閣樓溫馨雙床位" },
-        { "src": "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80", "caption": "獨立衛浴設施" },
-        { "src": "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80", "caption": "木屋門前獨立休閒陽台" }
+        {
+          "src": "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=800&q=80",
+          "caption": "小木屋群戶外庭園與烤肉區"
+        },
+        {
+          "src": "https://images.unsplash.com/photo-1540518614846-7ede433c4550?auto=format&fit=crop&w=800&q=80",
+          "caption": "原木風格樓中樓內部"
+        },
+        {
+          "src": "https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=800&q=80",
+          "caption": "房內兒童小遊戲區"
+        },
+        {
+          "src": "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=800&q=80",
+          "caption": "閣樓溫馨雙床位"
+        },
+        {
+          "src": "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80",
+          "caption": "獨立衛浴設施"
+        },
+        {
+          "src": "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80",
+          "caption": "木屋門前獨立休閒陽台"
+        }
       ]
     }
   ]
