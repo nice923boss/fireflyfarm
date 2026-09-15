@@ -58,24 +58,32 @@
           "caption": "星閣 (六人閣樓套房)"
         },
         {
-          "src": "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=800&q=80",
+          "src": "images/1789446826602-photo.jpg",
           "caption": "和光 (四人套房)"
         },
         {
-          "src": "https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=800&q=80",
+          "src": "images/1789446832381-photo.jpg",
           "caption": "粉霧 (四人套房)"
         },
         {
-          "src": "https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?auto=format&fit=crop&w=800&q=80",
+          "src": "images/1789446838411-photo.jpg",
           "caption": "森白 (四人套房)"
         },
         {
-          "src": "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80",
+          "src": "images/1789446842186-photo.jpg",
           "caption": "藍汐 (四人套房)"
         },
         {
-          "src": "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80",
+          "src": "images/1789446851741-1676871745346.jpg",
           "caption": "公共交誼客廳"
+        },
+        {
+          "src": "images/1789446898702-dsc-5945.jpg",
+          "caption": "飛螢農莊銀河星軌"
+        },
+        {
+          "src": "images/1789446970312-1707572758473.jpg",
+          "caption": "包棟戶外木棧道"
         }
       ]
     },
@@ -86,7 +94,7 @@
       "desc": "熟悉的三合院落，住進山林裡。提供8人套房，適合大家庭與好友共度美好時光。",
       "priceNote": "一般假日 $6000 / 連假及螢火蟲季 $8000 / 平日 $5200",
       "image": {
-        "src": "https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=800&q=80",
+        "src": "images/1789446760873-36869175-bf69-4a28-90ea-1f8f1d24835a.jpg",
         "alt": "三合院區"
       },
       "equipment": [
@@ -110,19 +118,15 @@
       ],
       "gallery": [
         {
-          "src": "https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=800&q=80",
-          "caption": "八人套房空間全景"
-        },
-        {
           "src": "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80",
           "caption": "三合院古樸中庭"
         },
         {
-          "src": "https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?auto=format&fit=crop&w=800&q=80",
+          "src": "images/1789447099100-photo.jpg",
           "caption": "小客廳休息區"
         },
         {
-          "src": "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=800&q=80",
+          "src": "images/1789447110583-photo.jpg",
           "caption": "寢室溫馨床位"
         },
         {
@@ -166,11 +170,11 @@
       ],
       "gallery": [
         {
-          "src": "https://images.unsplash.com/photo-1507089947368-19c1da9775ae?auto=format&fit=crop&w=800&q=80",
+          "src": "images/1789447182296-chatgpt-image-2026-7-8-11-00-52.jpg",
           "caption": "山上住久獨立山居建築"
         },
         {
-          "src": "https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?auto=format&fit=crop&w=800&q=80",
+          "src": "images/1789447408740-f7594999-a765-45d9-9414-7f931ccf6a5d.jpg",
           "caption": "溫馨舒適小客廳"
         },
         {
@@ -178,8 +182,8 @@
           "caption": "簡易廚房料理台"
         },
         {
-          "src": "https://images.unsplash.com/photo-1540518614846-7ede433c4550?auto=format&fit=crop&w=800&q=80",
-          "caption": "樓中樓溫馨臥房"
+          "src": "images/1789447293532-chatgpt-image-2026-7-21-08-17-14.jpg",
+          "caption": "貓頭鷹的家(樓中樓六人套房)"
         },
         {
           "src": "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=800&q=80",
@@ -188,6 +192,10 @@
         {
           "src": "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80",
           "caption": "戶外露台綠意景觀"
+        },
+        {
+          "src": "images/1789447326783-chatgpt-image-2026-7-21-08-20-38.jpg",
+          "caption": "松鼠果果窩(四人套房)"
         }
       ]
     },
